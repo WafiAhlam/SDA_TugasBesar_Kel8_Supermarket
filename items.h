@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define BOOLEAN
-#ifndef TREERAK_H
+#ifndef items_H
 #define MAX_ID_BARANG 20
 #define MAX_NAMA_BARANG 50
 
