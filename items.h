@@ -9,10 +9,10 @@ typedef struct ItemNode {
     int stock;
     int harga;
     ItemNode* next;
-    ItemNode* prev;
+    item dataBarang;
 } ItemNode;
 
-int info;
+typedef ItemNode *AddressItemNode;
 typedef struct Listitem *address;
 typedef struct Listitem {
     char type[50];
@@ -26,12 +26,9 @@ typedef struct item {
     double harga;
 } item;
 
+AddressItemNode CreateNode (item barang);
+void insertNode (AddressItemNode *head, item barang);
 void displayItem (const item* barang );
-void CreateItem (item* item);
-
-
-
-
 
 
 #endif

@@ -3,11 +3,23 @@
 #include "items.h"
 #include <stdlib.h>
 
-void displayItem(const item* barang) {
+AddressItemNode* CreateNode (item barang) {
+    AddressItemNode newNode = (AddressItemNode)malloc(sizeof(ItemNode));
+    if (newNode == NULL) {
+        perror ("Gagal alokasi node baru");
+        return NULL;
+    }
+    newNode->dataBarang = barang;
+    newNode->next = NULL;
+    return newNode;
+}
  
+void insertNode (AddressItemNode *head, item barang) {
+
+
 }
 
-void CreateItem (item* item) {
+void displayItem (const item* barang) {
 
 
 }
