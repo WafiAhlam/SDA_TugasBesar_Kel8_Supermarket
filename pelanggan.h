@@ -5,7 +5,7 @@
 #ifndef Pelanggan_H
 
 typedef struct Pelanggan {
-    char idpelanggan [MAX_ID_PELANGGAN];
+    char nama[50];
     Keranjang* KPelanggan;
 } Pelanggan;
 

@@ -1,20 +1,26 @@
-#ifndef Kasir_H
+#ifndef KASIR_H
+#define KASIR_H
 #include "Pelanggan.h"
-typedef struct NodeAntrian {
-    NodeAntrian* next;
-    Pelanggan* dataP;
-} NodeAntrian;
+#include "queue.h"
+#include "keranjang.h"
 
-typedef struct AntrianKasir {
-    NodeAntrian* front;
-    NodeAntrian* rear;
-    int count;
-} AntrianKasir;
+// Variabel global untuk statistik kasir
+extern double totalPemasukan;
+extern int totalPelangganDilayani;
 
-AntrianKasir* CreateKasir();
-int isKasirEmpty (const AntrianKasir* antrian);
-void clearKasir (AntrianKasir* antrian);
+// Menambahkan pelanggan ke antrian
+void tambahPelanggan(Queue *Q, infotype pelanggan);
 
+// Memproses pelanggan di depan antrian
+void prosesPelanggan(Queue *Q);
+
+// Menampilkan seluruh antrian pelanggan
+void tampilkanAntrian(Queue Q);
+
+// Menampilkan statistik kasir
+// void tampilkanStatistik();
+
+#endif // KASIR_H
 
 
 
