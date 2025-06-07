@@ -9,3 +9,6 @@
 
 //Queue antrianPelanggan;       // pelanggan yang lagi ngantri
 //Queue pelangganSelesai;       // pelanggan yang udah selesai belanja
+
+
+

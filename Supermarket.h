@@ -17,6 +17,21 @@ typedef struct {
     // LinkedListMasterItem* masterItemList;
 } Supermarket;
 
+typedef struct Item {
+    char id[20];
+    int stok;
+    double harga;
+    struct Item* next;
+} Item;
+
+typedef struct NodeRak {
+    Item* daftarItem;
+    struct NodeRak* left;
+    struct NodeRak* right;
+    int jarakDariEntry;
+} NodeRak;
+
+
 // Fungsi-fungsi Admin/Supermarket
 // Inisialisasi Supermarket
 Supermarket* initSupermarket(int jumlahKasir);
@@ -44,5 +59,6 @@ void closeSupermarket(Supermarket* supermarket);
 
 // Memastika bahwa terdapat rak di dalam rak Node yang sudah di inisialisasi
 // Sebenenarnya tidak begitu penting unutk digunakan dalam program ini hanya saja agar secara realistis dapat di buat dala
-
+void destroyTreeRak(TreeRak* tree);
+void destroyAntrian(AntrianKasir* kasir);
 #endif
