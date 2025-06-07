@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef NonBinaryTree_H
-#define NonBinaryTree_h
+#ifndef NONBINARYTREE_H
+#define NONBINARYTREE_h
 #include <stdbool.h>
 
 // -----------------------------------------------------------------------------

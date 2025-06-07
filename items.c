@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "../include/items.h"
+#include "items.h"
 #include <stdlib.h>
 
 // Fungsi untuk membuat node item baru (mengadaptasi Alokasi dari linkedlist.c)

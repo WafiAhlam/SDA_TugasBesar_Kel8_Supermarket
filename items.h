@@ -1,14 +1,14 @@
-#define BOOLEAN
-#ifndef items_H
+#ifndef ITEMS_H
+#define ITEMS_H
 #include <stdio.h> // Untuk NULL dan printf
 #include <stdlib.h> // Untuk malloc, free
 #include <string.h> // Untuk strncpy
+#include "BOOLEAN.H"
 
 #define MAX_ID_BARANG 20
 #define MAX_NAMA_BARANG 50
 
 // Definisi boolean (dari linkedlist.c)
-typedef int boolean;
 #define true 1
 #define false 0
 

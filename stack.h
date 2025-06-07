@@ -1,5 +1,5 @@
-#ifndef STACK2_H
-#define stack_H
+#ifndef STACK_H
+#define STACK_H
 #include "linked.h"
 
 typedef address Stack;

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define BOOLEAN
 #ifndef TREERAK_H
 #define TREERAK_H
 #define MAX_NAMA_RAK 50
@@ -8,8 +7,8 @@
 
 typedef struct Treerak {
     char type[50];
-    Treerak* firstson;
-    Treerak* nextbrother;
+    struct Treerak* firstson;
+    struct Treerak* nextbrother;
 } Treerak;
 
 // Node untuk Non-Binary Tree Rak

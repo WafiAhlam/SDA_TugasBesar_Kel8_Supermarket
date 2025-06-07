@@ -3,7 +3,7 @@
 #include "linked.h"
 #include "Queue.h"
 #include "Kasir.h"
-#include "stack2.h"
+#include "stack.h"
 #include "Treerak.h"
 #include "Keranjang.h"
 #include "pelanggan.h"
@@ -13,7 +13,7 @@ int main()
 
     //keranjang kasih 
     Keranjang* keranjang = createKeranjang();
-  
+    Listitem listMakanan;
     char inputID[MAX_ID_BARANG];
     printf("Masukkan ID barang yang ingin dibeli: ");
     scanf("%s", inputID);

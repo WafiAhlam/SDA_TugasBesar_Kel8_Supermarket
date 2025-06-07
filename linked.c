@@ -5,7 +5,7 @@
 
 #include <limits.h>
 #include <malloc.h>
-#include "linked2.h"
+#include "linked.h"
 #include "boolean.h"
 #define UNUSED(x) (void)x;
 
@@ -69,7 +69,7 @@ address Search(List L, infotype X)
 	P = First(L);
 	while ((P != Nil) && (!found))
 	{
-		if (Info(P) == X)
+		if (P->info.nama == X.nama)
 		{
 			found = true;
 		}
@@ -123,7 +123,7 @@ address SearchPrec(List L, infotype X)
 	P = First(L);
 	while ((P != Nil) && (!found))
 	{
-		if (Info(P) == X)
+		if (P->info.nama == X.nama)
 		{
 			found = true;
 		}

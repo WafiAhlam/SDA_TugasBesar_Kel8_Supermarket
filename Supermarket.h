@@ -11,7 +11,7 @@
 typedef struct {
     TreeRak* sistemRak;
     // Mungkin ada beberapa antrian kasir, bisa berupa array AntrianKasir*
-    AntrianKasir** daftarKasir;
+    //AntrianKasir** daftarKasir;
     int jumlahKasir;
     // Daftar master semua item yang tersedia di supermarket (opsional)
     // LinkedListMasterItem* masterItemList;
@@ -24,12 +24,12 @@ typedef struct Item {
     struct Item* next;
 } Item;
 
-typedef struct NodeRak {
-    Item* daftarItem;
-    struct NodeRak* left;
-    struct NodeRak* right;
-    int jarakDariEntry;
-} NodeRak;
+// typedef struct NodeRak {
+//     Item* daftarItem;
+//     struct NodeRak* left;
+//     struct NodeRak* right;
+//     int jarakDariEntry;
+// } NodeRak;
 
 
 // Fungsi-fungsi Admin/Supermarket
@@ -46,7 +46,7 @@ double getHargaItem(const TreeRak* rakSystem, const char* idBarang);
 void pelangganMasukAntrian(Supermarket* supermarket, Pelanggan* pelanggan, int nomorKasir);
 
 // Proses checkout pelanggan dari kasir
-double prosesCheckout(AntrianKasir* kasir); // Mengembalikan total belanjaan
+//double prosesCheckout(AntrianKasir* kasir); // Mengembalikan total belanjaan
 
 // Menemukan rak terdekat (implementasi tergantung bagaimana 'jarakDariEntry' digunakan)
 NodeRak* findRakTerdekat(const TreeRak* rakSystem); // Ini contoh, detailnya perlu dirancang
@@ -57,5 +57,5 @@ void closeSupermarket(Supermarket* supermarket);
 // Memastika bahwa terdapat rak di dalam rak Node yang sudah di inisialisasi
 // Sebenenarnya tidak begitu penting unutk digunakan dalam program ini hanya saja agar secara realistis dapat di buat dala
 void destroyTreeRak(TreeRak* tree);
-void destroyAntrian(AntrianKasir* kasir);
+// void destroyAntrian(AntrianKasir* kasir);
 #endif

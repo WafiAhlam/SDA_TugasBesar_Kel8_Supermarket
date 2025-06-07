@@ -1,5 +1,5 @@
 #ifndef LINKED_H
-#define linked_H
+#define LINKED_H
 #include "boolean.h"
 #include <stdio.h>
 #include "pelanggan.h"
