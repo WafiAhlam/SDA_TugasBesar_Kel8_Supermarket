@@ -15,6 +15,7 @@ typedef struct TreeNode {
     InfoType data; // Pointer generik untuk menyimpan data spesifik aplikasi
     struct TreeNode* firstChild;
     struct TreeNode* nextSibling; 
+    struct TreeNode* parent;
 } TreeNode;
 
 TreeNode* TCreateNode(InfoType data);
