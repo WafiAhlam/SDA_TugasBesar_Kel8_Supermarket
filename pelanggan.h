@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "Keranjang.h"
 #define MAX_ID_PELANGGAN 40
-#ifndef Pelanggan_H
+#ifndef PELANGGAN_H
+#define PELANGGAN_H
 
 typedef struct Pelanggan {
     char nama[50];

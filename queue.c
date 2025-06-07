@@ -2,6 +2,7 @@
 /*Dibuat tanggal 28-3-2013*/
 
 #include "queue.h"
+#include "linked.h"
 
 /*Membuat sebuah queue baru dengan Front dan Rear NULL*/
 void CreateQueue(Queue *Q) 

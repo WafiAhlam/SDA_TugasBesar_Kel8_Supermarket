@@ -2,12 +2,13 @@
 #define linked_H
 #include "boolean.h"
 #include <stdio.h>
+#include "pelanggan.h"
 #define Nil NULL
 #define Info(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) (L).First
 
-typedef char infotype;
+typedef Pelanggan infotype;
 typedef struct tElmtList *address;
 typedef struct tElmtList {
 	 infotype info;
