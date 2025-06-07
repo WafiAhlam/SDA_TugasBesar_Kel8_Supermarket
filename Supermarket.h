@@ -24,9 +24,6 @@ Supermarket* initSupermarket(int jumlahKasir);
 // Admin: Memeriksa stok barang di rak tertentu
 int ViewStokBarang(const NodeRak* rak, const char* idBarang);
 
-// Admin: Menambah/update stok barang di rak tertentu
-void UpdateStokBarang(NodeRak* rak, const char* idBarang, int jumlahBaru, double hargaBaruJikaBerubah);
-
 // Menampilkan harga item (bisa mencari di rak atau master list)
 double getHargaItem(const TreeRak* rakSystem, const char* idBarang);
 

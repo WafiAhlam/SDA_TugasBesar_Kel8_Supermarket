@@ -41,7 +41,7 @@ typedef struct Listitem {
 } Listitem;
 
 // Prototipe fungsi-fungsi untuk Item dan Listitem
-// Mengadaptasi fungsi-fungsi penting dari linkedlist.c
+
 
 // Fungsi untuk membuat node item baru (mengadaptasi Alokasi)
 AddressItemNode CreateItemNode(item barang, int stock);
@@ -65,7 +65,7 @@ AddressItemNode SearchItem(Listitem L, const char* idBarang);
 // Fungsi untuk menampilkan semua item dalam list (mengadaptasi PrintInfo)
 void PrintListItem(Listitem L);
 
-// Fungsi untuk menampilkan detail satu item (sudah ada di item.h asli)
+// Fungsi untuk menampilkan detail satu item
 void displayItem(const item* barang);
 
-#endif // ITEMS_H
+#endif

@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "items.h"
+#include "../include/items.h"
 #include <stdlib.h>
-
-
-
-#include "item.h" // Menginclude header item.h yang sudah direvisi
-#include <stdio.h>
-#include <stdlib.h> // Untuk malloc, free
-#include <string.h> // Untuk strncpy, strcmp
 
 // Fungsi untuk membuat node item baru (mengadaptasi Alokasi dari linkedlist.c)
 // Mengalokasikan memori untuk ItemNode dan menginisialisasi data
