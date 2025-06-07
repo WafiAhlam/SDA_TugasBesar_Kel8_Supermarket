@@ -32,22 +32,22 @@ typedef struct {
 NodeRak* CreateNodeRak(const char* nama, double jarak);
 
 // Fungsi untuk menambah sub-rak ke sebuah NodeRak
-void tambahSubRak(NodeRak* parent, NodeRak* child);
+void TambahSubRak(NodeRak* parent, NodeRak* child);
 
 // Fungsi untuk menambah item ke daftarBarangDiRak pada NodeRak
-void tambahItem(NodeRak* rak, item* barang, int stok);
+void TambahItem(NodeRak* rak, item* barang, int stok);
 
 // Fungsi untuk mencari item di rak tertentu dan mengurangi stoknya
-ItemNode* ambilItem(NodeRak* rak, const char* idBarang, int jumlah);
+ItemNode* AmbilItem(NodeRak* rak, const char* idBarang, int jumlah);
 
 // Fungsi untuk mencari NodeRak berdasarkan nama (contoh traversal)
-NodeRak* findNodeRak(NodeRak* root, const char* namaRak);
+NodeRak* FindNodeRak(NodeRak* root, const char* namaRak);
 
 // Fungsi untuk menampilkan struktur rak (misalnya, secara rekursif)
-void displayTreeRak(const NodeRak* node, int level);
+void DisplayTreeRak(const NodeRak* node, int level);
 
 // Fungsi untuk membersihkan memori TreeRak
-void freeTreeRak(NodeRak* node);
+void FreeTreeRak(NodeRak* node);
 
 
 #endif
