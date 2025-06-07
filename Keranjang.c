@@ -57,8 +57,7 @@ double getTotalHargaKeranjang(const Keranjang* keranjang) {
 
 void clearKeranjang(Keranjang* keranjang) {
     while (!isKeranjangEmpty(keranjang)) {
-        item* barang = popKeranjang(keranjang);
-        free(barang); 
+        popKeranjang(keranjang); 
     }
 }
 
