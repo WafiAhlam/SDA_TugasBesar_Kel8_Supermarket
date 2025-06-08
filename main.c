@@ -55,8 +55,8 @@ int main()
     Keranjang* keranjang = createKeranjang();
     
     char inputID[MAX_ID_BARANG];
-    printf("\n--- Tes Keranjang Standalone ---\n");
-    printf("Masukkan ID barang yang ingin dibeli: ");
+    printf("\n--- keranjang ---\n");
+    printf("Masukkan barang yang akan dimasukan ke keranjang: ");
     scanf("%s", inputID);
 
     AddressItemNode found = findItemDataOnTree(rootSupermarket, inputID); 

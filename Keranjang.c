@@ -23,7 +23,7 @@ void pushKeranjang(Keranjang* keranjang, item* barang) {
 
 item* popKeranjang(Keranjang* keranjang) {
     if (keranjang->top == NULL) {
-        return NULL; // Stack kosong
+        return NULL; 
     }
 
     NodeKeranjang* temp = keranjang->top;
@@ -49,7 +49,7 @@ double getTotalHargaKeranjang(const Keranjang* keranjang) {
     double total = 0.0;
     NodeKeranjang* current = keranjang->top;
     while (current != NULL) {
-        //total += current->barang->harga * current->barang->jumlah;
+        total += current->barang->harga;  
         current = current->next;
     }
     return total;
@@ -72,8 +72,7 @@ void displayKeranjang(const Keranjang* keranjang) {
     int index = 1;
     while (current != NULL) {
         item* barang = current->barang;
-        //printf("%d. %s (Jumlah: %d, Harga: %.2f)\n", index++, barang->nama, barang->jumlah, barang->harga);
-        current = current->next;
+        printf("%d. %s (Harga: %.2f)\n", index++, barang->namabarang, barang->harga); 
     }
     printf("Total: %.2f\n", getTotalHargaKeranjang(keranjang));
 }
