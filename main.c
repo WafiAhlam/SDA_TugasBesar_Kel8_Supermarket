@@ -1,59 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// Include dari kode yang sudah ada
-#include "linked.h"
+#include "Supermarket.h" // Modul baru untuk setup!
+#include "TreeRak.h"       // Tetap diperlukan untuk fungsi-fungsi seperti tampilkanPeta, dll.
 #include "Queue.h"
-#include "Kasir.h"
-#include "stack.h"
 #include "Keranjang.h"
 #include "pelanggan.h"
-#include "TreeRak.h"
+#include "Kasir.h"
 
-// Deklarasi fungsi helper
-item buatContohItem(const char* id, const char* nama, double harga);
+// Deklarasi fungsi helper. Idealnya ini dipindah ke TreeRak.h/.c
 AddressItemNode findItemDataOnTree(TreeNode* root, const char* idBarang);
 
 int main() 
 {
     // ==========================================================
-    // SETUP SUPERMARKET (Kode ini sudah benar)
+    // SETUP SUPERMARKET MENJADI SATU PANGGILAN FUNGSI
+    // Semua kerumitan pembuatan item dan rak ada di dalam Supermarket.c
     // ==========================================================
-    printf("Selamat Datang di Program Simulasi Supermarket!\n");
-    TreeNode* rootSupermarket = buatLayoutSupermarket();
+    TreeNode* rootSupermarket = setupAndPopulateSupermarket();
     if (rootSupermarket == NULL) {
-        fprintf(stderr, "Gagal membuat layout supermarket. Program berhenti.\n");
-        return 1;
+        return 1; // Pesan error sudah ditampilkan di dalam fungsi setup
     }
 
-    printf("\n--- Mengisi Barang ke Rak ---\n");
-    item itemApel = buatContohItem("APL01", "Apel Fuji Premium", 25000.0);
-    item itemSirsak = buatContohItem("SI35K", "Sirsak Sulawesi", 18000.0);
-    item itemSemangka = buatContohItem("SE45KA", "Semangka Depok", 34000.0);
-    item itemSusu = buatContohItem("SUS01", "Susu UHT Coklat 1L", 18000.0);
-    item itemYogurt = buatContohItem("YO84", "Yogurt Cimory", 19000.0);
-    item itemSoda = buatContohItem("SO43", "Soda asal Indonesia", 5000.0);
-    item itemDaging = buatContohItem("DAG01", "Daging Sapi Sirloin", 120000.0);
-    item itemDagong = buatContohItem("DAG02", "Daging Wagyu A6", 5000000.0);
-
-    TreeNode* rakBuah = cariRakDenganNama(rootSupermarket, "Sub-rak Buah");
-    TreeNode* rakMinuman = cariRakDenganNama(rootSupermarket, "Rak Minuman");
-    TreeNode* rakDaging = cariRakDenganNama(rootSupermarket, "Rak Daging & Ikan");
-
-    if (rakBuah) tambahItemKeRak(rakBuah, itemApel, 100);
-    if (rakBuah) tambahItemKeRak(rakBuah, itemSirsak, 30);
-    if (rakBuah) tambahItemKeRak(rakBuah, itemSemangka, 23);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemYogurt, 38);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemSoda, 45);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemSusu, 80);
-    if (rakDaging) tambahItemKeRak(rakDaging, itemDagong, 3);
-    if (rakDaging) tambahItemKeRak(rakDaging, itemDaging, 30);
-    
-    tampilkanPetaSupermarket(rootSupermarket);
-
     // ====================================================================
-    // SIMULASI UTAMA
+    // SIMULASI UTAMA (Tidak ada perubahan di sini)
+    // main.c sekarang hanya fokus pada alur menu interaktif.
     // ====================================================================
     Queue antrianPelanggan;
     CreateQueue(&antrianPelanggan);
@@ -63,8 +34,9 @@ int main()
         printf("\n\n=== MENU UTAMA SIMULASI ===\n");
         printf("1. Pelanggan Baru Datang & Belanja\n");
         printf("2. Tampilkan Peta Supermarket\n");
-        printf("3. Proses Pelanggan Berikutnya di Kasir\n");
-        printf("4. Tampilkan Antrian Pelanggan\n");
+        printf("3. Cari Rute & Jarak Antar Rak\n");
+        printf("4. Proses Pelanggan Berikutnya di Kasir\n");
+        printf("5. Tampilkan Antrian Pelanggan\n");
         printf("0. Keluar\n");
         printf("Pilih menu: ");
         scanf("%d", &pilih);
@@ -88,22 +60,16 @@ int main()
                     printf("Jumlah yang ingin diambil: ");
                     scanf("%d", &jumlahAmbil);
 
-                    // --- LOGIKA DIPERBAIKI DAN DIBERSIHKAN ---
-                    // 1. Coba ambil barang dari rak. Fungsi ini akan mengurangi stok.
                     if (ambilItemDariRak(rootSupermarket, idBarang, jumlahAmbil)) {
-                        // 2. Jika berhasil, baru cari data itemnya untuk dimasukkan ke keranjang.
                         AddressItemNode nodeItemData = findItemDataOnTree(rootSupermarket, idBarang);
                         if (nodeItemData != NULL) {
-                            // 3. Masukkan ke keranjang sebanyak jumlah yang diambil.
                             for (int i = 0; i < jumlahAmbil; i++) {
                                 pushKeranjang(pelangganBaru.KPelanggan, &nodeItemData->dataBarang);
                             }
-                            // HANYA SATU PESAN SUKSES DARI MAIN.C
-                            printf(">> BERHASIL: '%s' x%d dimasukkan ke keranjang pelanggan '%s'.\n", 
-                                   nodeItemData->dataBarang.namabarang, jumlahAmbil, pelangganBaru.nama);
+                            printf(">> BERHASIL: '%s' x%d dimasukkan ke keranjang.\n", nodeItemData->dataBarang.namabarang, jumlahAmbil);
                         }
                     } 
-                    
+
                     printf("Tambah barang lagi untuk '%s'? (y/n): ", pelangganBaru.nama);
                     scanf(" %c", &tambahBarang);
                 } while (tambahBarang == 'y' || tambahBarang == 'Y');
@@ -118,10 +84,21 @@ int main()
             case 2:
                 tampilkanPetaSupermarket(rootSupermarket);
                 break;
-            case 3:
+            case 3: {
+                char namaAwal[50], namaTujuan[50];
+                printf("\n--- Navigasi Rute ---\n");
+                tampilkanPetaSupermarket(rootSupermarket);
+                printf("Masukkan Lokasi Awal (contoh: Pintu Masuk): ");
+                scanf(" %[^\n]", namaAwal);
+                printf("Masukkan Lokasi Tujuan (contoh: Rak Daging & Ikan): ");
+                scanf(" %[^\n]", namaTujuan);
+                cariRuteDanJarak(rootSupermarket, namaAwal, namaTujuan);
+                break;
+            }
+            case 4:
                 prosesPelanggan(&antrianPelanggan);
                 break;
-            case 4:
+            case 5:
                 tampilkanAntrian(antrianPelanggan);
                 break;
             case 0:
@@ -140,36 +117,20 @@ int main()
     return 0;
 }
 
-
-// Implementasi fungsi helper (sudah benar)
-item buatContohItem(const char* id, const char* nama, double harga) {
-    item newItem;
-    strncpy(newItem.idbarang, id, sizeof(newItem.idbarang) - 1);
-    newItem.idbarang[sizeof(newItem.idbarang) - 1] = '\0';
-    
-    strncpy(newItem.namabarang, nama, sizeof(newItem.namabarang) - 1);
-    newItem.namabarang[sizeof(newItem.namabarang) - 1] = '\0';
-
-    newItem.harga = harga;
-    return newItem;
-}
-
+// Implementasi findItemDataOnTree (Idealnya dipindah ke TreeRak.c)
 AddressItemNode findItemDataOnTree(TreeNode* root, const char* idBarang) {
-    if (root == NULL) {
-        return NULL;
-    }
+    if (root == NULL) return NULL;
+    
     RakData* dataRak = (RakData*)root->data;
     AddressItemNode foundNode = SearchItem(dataRak->daftarItem, idBarang);
-    if (foundNode != NULL) {
-        return foundNode;
-    }
+    if (foundNode != NULL) return foundNode;
+
     TreeNode* child = root->firstChild;
     while (child != NULL) {
         AddressItemNode resultFromChild = findItemDataOnTree(child, idBarang);
-        if (resultFromChild != NULL) {
-            return resultFromChild;
-        }
+        if (resultFromChild != NULL) return resultFromChild;
         child = child->nextSibling;
     }
+    
     return NULL;
 }
