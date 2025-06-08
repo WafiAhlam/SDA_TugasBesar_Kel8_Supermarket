@@ -45,11 +45,11 @@ int isKeranjangEmpty(const Keranjang* keranjang) {
     return keranjang->top == NULL;
 }
 
-double getTotalHargaKeranjang(const Keranjang* keranjang) {
+double getTotalHargaKeranjang(const Keranjang* keranjang) { 
     double total = 0.0;
     NodeKeranjang* current = keranjang->top;
     while (current != NULL) {
-        total += current->barang->harga;  
+        total += current->barang->harga; //perubahan 
         current = current->next;
     }
     return total;
@@ -61,7 +61,7 @@ void clearKeranjang(Keranjang* keranjang) {
     }
 }
 
-void displayKeranjang(const Keranjang* keranjang) {
+void displayKeranjang(const Keranjang* keranjang) { 
     if (isKeranjangEmpty(keranjang)) {
         printf("Keranjang kosong.\n");
         return;
@@ -72,7 +72,7 @@ void displayKeranjang(const Keranjang* keranjang) {
     int index = 1;
     while (current != NULL) {
         item* barang = current->barang;
-        printf("%d. %s (Harga: %.2f)\n", index++, barang->namabarang, barang->harga); 
+        printf("%d. %s (Harga: %.2f)\n", index++, barang->namabarang, barang->harga); //perubahan
     }
     printf("Total: %.2f\n", getTotalHargaKeranjang(keranjang));
 }
