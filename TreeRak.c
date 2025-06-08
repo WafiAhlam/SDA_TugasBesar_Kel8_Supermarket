@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX_PATH 100
 #include "TreeRak.h"
 
 // ===================================================================
@@ -175,3 +176,6 @@ void cariRuteDanJarak(TreeNode* root, const char* namaAwal, const char* namaTuju
 void bebaskanLayoutSupermarket(TreeNode* root) {
     Tfree(root, &freeRakData);
 }
+
+
+

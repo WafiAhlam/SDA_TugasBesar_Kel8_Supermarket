@@ -18,5 +18,6 @@ void tambahItemKeRak(TreeNode* rakTujuan, item barang, int stock);
 TreeNode* cariRakDenganNama(TreeNode* root, const char* namaRak);
 boolean ambilItemDariRak(TreeNode* root, const char* idBarang, int jumlah);
 void bebaskanLayoutSupermarket(TreeNode* root);
+void cariRuteDanJarak(TreeNode* root, const char* namaAwal, const char* namaTujuan);
 
 #endif 
