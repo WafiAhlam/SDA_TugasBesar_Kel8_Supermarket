@@ -28,6 +28,7 @@ void tampilkanPetaSupermarket(TreeNode* root);
 void FindRuteDanJarak(TreeNode* root, const char* namaAwal, const char* namaTujuan);
 void tambahItemKeRak(TreeNode* rakTujuan, item barang, int stock);
 TreeNode* cariRakDenganNama(TreeNode* root, const char* namaRak);
+boolean ambilItemDariRak(TreeNode* root, const char* idBarang, int jumlah);
 void bebaskanLayoutSupermarket(TreeNode* root);
 
 #endif 
