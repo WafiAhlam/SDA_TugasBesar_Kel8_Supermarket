@@ -71,7 +71,7 @@ TreeNode* setupAndPopulateSupermarket() {
     if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemsendok, 30);
     if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemgarpu, 30);
     if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemteflon, 30);
-    if (rakRumah) tambahItemKeRak(rakRumah, itemSapu, 30);
+    if (rakRumah) tambahItemKeRak(rakRumah, itemSapu, 30); 
     
     printf("\nSetup Supermarket Selesai. Katalog barang telah dimuat.\n");
     tampilkanPetaSupermarket(rootSupermarket);

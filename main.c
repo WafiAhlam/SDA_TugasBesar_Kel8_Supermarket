@@ -31,15 +31,25 @@ int main()
 
     int pilih;
     do {
-        printf("\n\n=== MENU UTAMA SIMULASI ===\n");
-        printf("1. Pelanggan Baru Datang & Belanja\n");
-        printf("2. Tampilkan Peta Supermarket\n");
-        printf("3. Cari Rute & Jarak Antar Rak\n");
-        printf("4. Proses Pelanggan Berikutnya di Kasir\n");
-        printf("5. Tampilkan Antrian Pelanggan\n");
-        printf("0. Keluar\n");
+
+        printf("\n");
+        printf("=========================================\n");
+        printf("      SELAMAT DATANG DI CHIKAFIKET       \n");
+        printf("=========================================\n\n");
+
+        printf("=========================================\n");
+        printf("          MENU UTAMA SIMULASI             \n");
+        printf("=========================================\n");
+        printf(" 1. Pelanggan Baru Datang & Belanja      \n");
+        printf(" 2. Tampilkan Peta Supermarket           \n");
+        printf(" 3. Cari Rute & Jarak Antar Rak          \n");
+        printf(" 4. Proses Pelanggan Berikutnya di Kasir \n");
+        printf(" 5. Tampilkan Antrian Pelanggan           \n");
+        printf(" 0. Keluar                               \n");
+        printf("=========================================\n");
         printf("Pilih menu: ");
         scanf("%d", &pilih);
+        printf("\n");
 
         switch (pilih) {
             case 1: { // Pelanggan Baru Datang
