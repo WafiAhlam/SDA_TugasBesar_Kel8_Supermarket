@@ -72,6 +72,7 @@ int main()
                     printf("Jumlah yang ingin diambil: ");
                     scanf("%d", &jumlahAmbil);
                     printf("\n============================================\n");
+                    //
 
                     if (ambilItemDariRak(rootSupermarket, idBarang, jumlahAmbil)) {
                         AddressItemNode nodeItemData = findItemDataOnTree(rootSupermarket, idBarang);

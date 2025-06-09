@@ -49,7 +49,7 @@ TreeNode* setupAndPopulateSupermarket() {
     item itemciki = buatContohItem("LAY01", "Lays", 200000.0);
     item itempermen = buatContohItem("PER02", "Bubble Gum", 200000.0);
 
-    // Cari rak tujuan
+    // Cari rak tujuan//
     TreeNode* rakBuah = cariRakDenganNama(rootSupermarket, "Sub-rak Buah");
     TreeNode* rakMinuman = cariRakDenganNama(rootSupermarket, "Rak Minuman");
     TreeNode* rakDaging = cariRakDenganNama(rootSupermarket, "Rak Daging & Ikan");
