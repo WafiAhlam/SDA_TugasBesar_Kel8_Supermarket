@@ -4,6 +4,7 @@
 #include "Supermarket.h"
 
 // Fungsi helper untuk membuat item kita pindahkan ke sini agar rapi.
+// (Tidak ada perubahan di fungsi ini)
 item buatContohItem(const char* id, const char* nama, double harga) {
     item newItem;
     strncpy(newItem.idbarang, id, sizeof(newItem.idbarang) - 1);
@@ -21,6 +22,7 @@ item buatContohItem(const char* id, const char* nama, double harga) {
 TreeNode* setupAndPopulateSupermarket() {
     // ==========================================================
     // BAGIAN 1: MEMBUAT LAYOUT DASAR
+    // (Tidak ada perubahan di sini)
     // ==========================================================
     printf("Selamat Datang di Program Simulasi Supermarket!\n");
     // Memanggil fungsi dari TreeRak.c untuk membuat kerangka pohon
@@ -34,6 +36,7 @@ TreeNode* setupAndPopulateSupermarket() {
     // BAGIAN 2: MENGISI RAK DENGAN KATALOG BARANG
     // ==========================================================
     printf("\n--- Mengisi Barang (Katalog) ke Rak ---\n");
+    // Definisi item-item (tidak ada perubahan di sini)
     item itemApel = buatContohItem("APL01", "Apel Fuji Premium", 25000.0);
     item itemSirsak = buatContohItem("SI35K", "Sirsak Sulawesi", 18000.0);
     item itemSemangka = buatContohItem("SE45KA", "Semangka Depok", 34000.0);
@@ -49,29 +52,55 @@ TreeNode* setupAndPopulateSupermarket() {
     item itemciki = buatContohItem("LAY01", "Lays", 200000.0);
     item itempermen = buatContohItem("PER02", "Bubble Gum", 200000.0);
 
-    // Cari rak tujuan//
-    TreeNode* rakBuah = cariRakDenganNama(rootSupermarket, "Sub-rak Buah");
-    TreeNode* rakMinuman = cariRakDenganNama(rootSupermarket, "Rak Minuman");
-    TreeNode* rakDaging = cariRakDenganNama(rootSupermarket, "Rak Daging & Ikan");
-    TreeNode* rakMakanan = cariRakDenganNama(rootSupermarket, "Rak Makanan Ringan");
+    // REVISI: Mencari nama rak & sub-rak yang BENAR sesuai struktur baru dari diagram.
+    printf("Mencari node rak untuk penempatan barang...\n");
+    TreeNode* subRakSodaJus = cariRakDenganNama(rootSupermarket, "Sub-rak Soda & Jus");
+    // FIX: Untuk menaruh Susu & Yogurt, kita taruh di "Rak Minuman" sebagai induknya.
+    TreeNode* rakMinuman = cariRakDenganNama(rootSupermarket, "Rak Minuman"); 
+    TreeNode* subRakBuah = cariRakDenganNama(rootSupermarket, "Sub-rak Buah Lokal");
+    TreeNode* subRakDaging = cariRakDenganNama(rootSupermarket, "Sub-rak Daging Merah");
+    TreeNode* subRakMakanan = cariRakDenganNama(rootSupermarket, "Sub-rak Makanan Ringan");
     TreeNode* rakAlatDapur = cariRakDenganNama(rootSupermarket, "Rak Alat Dapur");
-    TreeNode* rakRumah = cariRakDenganNama(rootSupermarket, "Rak Perlengkapan Rumah");
+    TreeNode* subRakPembersih = cariRakDenganNama(rootSupermarket, "Sub-rak Pembersih");
 
-    // Tambahkan item ke rak
-    if (rakBuah) tambahItemKeRak(rakBuah, itemApel, 100);
-    if (rakBuah) tambahItemKeRak(rakBuah, itemSirsak, 30);
-    if (rakBuah) tambahItemKeRak(rakBuah, itemSemangka, 23);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemYogurt, 38);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemSoda, 45);
-    if (rakMinuman) tambahItemKeRak(rakMinuman, itemSusu, 80);
-    if (rakDaging) tambahItemKeRak(rakDaging, itemDagong, 3);
-    if (rakDaging) tambahItemKeRak(rakDaging, itemDaging, 30);
-    if (rakMakanan) tambahItemKeRak(rakMakanan, itempermen, 30);
-    if (rakMakanan) tambahItemKeRak(rakMakanan, itemciki, 30);
-    if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemsendok, 30);
-    if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemgarpu, 30);
-    if (rakAlatDapur) tambahItemKeRak(rakAlatDapur, itemteflon, 30);
-    if (rakRumah) tambahItemKeRak(rakRumah, itemSapu, 30); 
+    // REVISI: Menambahkan item ke rak & sub-rak yang lebih spesifik dan benar.
+    printf("Menambahkan item ke rak yang sesuai...\n");
+
+    // Menambahkan buah-buahan ke sub-rak buah
+    if (subRakBuah) {
+        tambahItemKeRak(subRakBuah, itemApel, 100);
+        tambahItemKeRak(subRakBuah, itemSirsak, 30);
+        tambahItemKeRak(subRakBuah, itemSemangka, 23);
+    }
+    
+    // Menambahkan minuman ke rak dan sub-rak yang sesuai
+    if (rakMinuman) {
+        tambahItemKeRak(rakMinuman, itemYogurt, 38);
+        tambahItemKeRak(rakMinuman, itemSusu, 80);
+    }
+    if (subRakSodaJus) tambahItemKeRak(subRakSodaJus, itemSoda, 45);
+
+    // Menambahkan daging ke sub-rak daging
+    if (subRakDaging) {
+        tambahItemKeRak(subRakDaging, itemDagong, 3);
+        tambahItemKeRak(subRakDaging, itemDaging, 30);
+    }
+    
+    // Menambahkan makanan ringan ke sub-raknya
+    if (subRakMakanan) {
+        tambahItemKeRak(subRakMakanan, itempermen, 30);
+        tambahItemKeRak(subRakMakanan, itemciki, 30);
+    }
+
+    // Menambahkan peralatan dapur ke rak utamanya
+    if (rakAlatDapur) {
+        tambahItemKeRak(rakAlatDapur, itemsendok, 30);
+        tambahItemKeRak(rakAlatDapur, itemgarpu, 30);
+        tambahItemKeRak(rakAlatDapur, itemteflon, 30);
+    }
+
+    // Menambahkan peralatan rumah tangga ke sub-rak pembersih
+    if (subRakPembersih) tambahItemKeRak(subRakPembersih, itemSapu, 30); 
     
     printf("\nSetup Supermarket Selesai. Katalog barang telah dimuat.\n");
     tampilkanPetaSupermarket(rootSupermarket);

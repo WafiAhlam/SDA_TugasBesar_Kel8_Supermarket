@@ -2,7 +2,7 @@
 #define KASIR_H
 #include "Pelanggan.h"
 #include "queue.h"
-#include "keranjang.h"
+#include "Keranjang.h"
 
 // Menambahkan pelanggan ke antrian
 void tambahPelanggan(Queue *Q, infotype pelanggan);
@@ -13,4 +13,4 @@ void prosesPelanggan(Queue *Q);
 // Menampilkan seluruh antrian pelanggan
 void tampilkanAntrian(Queue Q);
 
-#endif // KASIR_H
+#endif 
