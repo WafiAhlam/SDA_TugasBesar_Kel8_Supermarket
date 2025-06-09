@@ -37,7 +37,7 @@ int main()
         printf("      SELAMAT DATANG DI CHIKAFIKET       \n");
         printf("=========================================\n\n");
 
-        printf("=========================================\n");
+         printf("=========================================\n");
         printf("          MENU UTAMA SIMULASI             \n");
         printf("=========================================\n");
         printf(" 1. Pelanggan Baru Datang & Belanja      \n");
@@ -54,9 +54,10 @@ int main()
         switch (pilih) {
             case 1: { // Pelanggan Baru Datang
                 infotype pelangganBaru;
-                
+                printf("\n============================================\n");
                 printf("Masukkan nama pelanggan: ");
                 scanf(" %[^\n]", pelangganBaru.nama);
+                printf("\n============================================\n");
 
                 pelangganBaru.KPelanggan = createKeranjang();
 
@@ -64,11 +65,13 @@ int main()
                 do {
                     char idBarang[MAX_ID_BARANG];
                     int jumlahAmbil;
+                    
                     printf("\nPelanggan '%s' sedang memilih barang.\n", pelangganBaru.nama);
                     printf("Masukkan ID barang: ");
                     scanf("%s", idBarang);
                     printf("Jumlah yang ingin diambil: ");
                     scanf("%d", &jumlahAmbil);
+                    printf("\n============================================\n");
 
                     if (ambilItemDariRak(rootSupermarket, idBarang, jumlahAmbil)) {
                         AddressItemNode nodeItemData = findItemDataOnTree(rootSupermarket, idBarang);
@@ -76,7 +79,10 @@ int main()
                             for (int i = 0; i < jumlahAmbil; i++) {
                                 pushKeranjang(pelangganBaru.KPelanggan, &nodeItemData->dataBarang);
                             }
+                            
+                           
                             printf(">> BERHASIL: '%s' x%d dimasukkan ke keranjang.\n", nodeItemData->dataBarang.namabarang, jumlahAmbil);
+                            printf("\n============================================\n");
                         }
                     } 
 
