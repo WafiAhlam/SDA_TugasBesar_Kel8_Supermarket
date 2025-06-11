@@ -10,7 +10,4 @@ typedef struct Pelanggan {
     Keranjang* KPelanggan;
 } Pelanggan;
 
-Pelanggan* CreatePelanggan(const char* nama);
-void FreePelanggan(Pelanggan* p);
-
 #endif

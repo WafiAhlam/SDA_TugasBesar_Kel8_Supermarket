@@ -14,6 +14,7 @@ typedef struct Queue {
     address rear;
 } Queue;
 
+
 void CreateQueue (Queue *Q);
 boolean is_Empty (Queue Q);
 boolean is_Full (Queue Q);
