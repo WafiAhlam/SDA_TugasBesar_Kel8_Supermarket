@@ -87,36 +87,36 @@ void setParentPointersRecursive(TreeNode* node) {
 //  IMPLEMENTASI FUNGSI DARI TREERAK.H
 // ===================================================================
 
-TreeNode* buatLayoutSupermarket() {
-    printf("Membangun layout supermarket sesuai diagram...\n");
-    TreeNode* root = TCreateNode(buatDataRak("Pintu Masuk", 0));
-    if (root != NULL) root->parent = NULL;
-    TreeNode* rakMinuman = TCreateNode(buatDataRak("Rak Minuman", 3));
-    TaddChild(root, rakMinuman);
-    TreeNode* rakBuah = TCreateNode(buatDataRak("Rak Buah", 5));
-    TaddChild(root, rakBuah);
-    TreeNode* rakDaging = TCreateNode(buatDataRak("Rak Daging", 5));
-    TaddChild(rakMinuman, rakDaging);
-    TreeNode* rakMakanan = TCreateNode(buatDataRak("Rak Makanan", 8));
-    TaddChild(rakMinuman, rakMakanan);
-    TreeNode* rakAlatDapur = TCreateNode(buatDataRak("Rak Alat Dapur", 10));
-    TaddChild(rakMinuman, rakAlatDapur);
-    TreeNode* rakSayuran = TCreateNode(buatDataRak("Rak Sayuran", 8));
-    TaddChild(rakBuah, rakSayuran);
-    TreeNode* rakPerlengkapanRumah = TCreateNode(buatDataRak("Rak Perlengkapan Rumah", 15));
-    TaddChild(rakAlatDapur, rakPerlengkapanRumah);
-    TaddChild(rakMinuman, TCreateNode(buatDataRak("Sub-rak Soda & Jus", 2)));
-    TaddChild(rakDaging, TCreateNode(buatDataRak("Sub-rak Daging Merah", 1)));
-    TaddChild(rakMakanan, TCreateNode(buatDataRak("Sub-rak Makanan Ringan", 1)));
-    TaddChild(rakBuah, TCreateNode(buatDataRak("Sub-rak Buah Lokal", 2)));
-    TaddChild(rakSayuran, TCreateNode(buatDataRak("Sub-rak Sayuran Daun", 1)));
-    TaddChild(rakPerlengkapanRumah, TCreateNode(buatDataRak("Sub-rak Pembersih", 2)));
+// TreeNode* buatLayoutSupermarket() {
+//     printf("Membangun layout supermarket sesuai diagram...\n");
+//     TreeNode* root = TCreateNode(buatDataRak("Pintu Masuk", 0));
+//     if (root != NULL) root->parent = NULL;
+//     TreeNode* rakMinuman = TCreateNode(buatDataRak("Rak Minuman", 3));
+//     TaddChild(root, rakMinuman);
+//     TreeNode* rakBuah = TCreateNode(buatDataRak("Rak Buah", 5));
+//     TaddChild(root, rakBuah);
+//     TreeNode* rakDaging = TCreateNode(buatDataRak("Rak Daging", 5));
+//     TaddChild(rakMinuman, rakDaging);
+//     TreeNode* rakMakanan = TCreateNode(buatDataRak("Rak Makanan", 8));
+//     TaddChild(rakMinuman, rakMakanan);
+//     TreeNode* rakAlatDapur = TCreateNode(buatDataRak("Rak Alat Dapur", 10));
+//     TaddChild(rakMinuman, rakAlatDapur);
+//     TreeNode* rakSayuran = TCreateNode(buatDataRak("Rak Sayuran", 8));
+//     TaddChild(rakBuah, rakSayuran);
+//     TreeNode* rakPerlengkapanRumah = TCreateNode(buatDataRak("Rak Perlengkapan Rumah", 15));
+//     TaddChild(rakAlatDapur, rakPerlengkapanRumah);
+//     TaddChild(rakMinuman, TCreateNode(buatDataRak("Sub-rak Soda & Jus", 2)));
+//     TaddChild(rakDaging, TCreateNode(buatDataRak("Sub-rak Daging Merah", 1)));
+//     TaddChild(rakMakanan, TCreateNode(buatDataRak("Sub-rak Makanan Ringan", 1)));
+//     TaddChild(rakBuah, TCreateNode(buatDataRak("Sub-rak Buah Lokal", 2)));
+//     TaddChild(rakSayuran, TCreateNode(buatDataRak("Sub-rak Sayuran Daun", 1)));
+//     TaddChild(rakPerlengkapanRumah, TCreateNode(buatDataRak("Sub-rak Pembersih", 2)));
 
-    setParentPointersRecursive(root);
+//     setParentPointersRecursive(root);
     
-    printf("Layout supermarket berhasil dibangun sesuai diagram.\n");
-    return root;
-}
+//     printf("Layout supermarket berhasil dibangun sesuai diagram.\n");
+//     return root;
+// }
 
 void tambahItemKeRak(TreeNode* rakTujuan, item barang, int stock) {
     if (rakTujuan == NULL) {
@@ -216,110 +216,97 @@ AddressItemNode findItemDataOnTree(TreeNode* root, const char* idBarang) {
 // Benda atau barang dari dalam treenya agar pemanfaatannya dapat digunakan secara efisien 
 
 
-/ ===================== IMPLEMENTASI PUBLIK =====================
+// ===================== IMPLEMENTASI PUBLIK =====================
 
 TreeNode* buatLayoutSupermarket() {
-    TreeNode* root = TCreateNode(buatDataRak("Pintu Masuk"));
+    TreeNode* root = TCreateNode(buatDataRak("Pintu Masuk", 0));
     root->parent = NULL;
 
-    TreeNode* rakMakanan = TCreateNode(buatDataRak("Rak Makanan"));
+    // Rak utama
+    TreeNode* rakMakanan = TCreateNode(buatDataRak("Rak Makanan", 5));
     TaddChild(root, rakMakanan);
 
-    TreeNode* rakMinuman = TCreateNode(buatDataRak("Rak Minuman"));
+    TreeNode* rakMinuman = TCreateNode(buatDataRak("Rak Minuman", 5));
     TaddChild(root, rakMinuman);
 
-    TreeNode* rakKecantikan = TCreateNode(buatDataRak("Rak Kecantikan"));
+    TreeNode* rakKecantikan = TCreateNode(buatDataRak("Rak Kecantikan", 5));
     TaddChild(root, rakKecantikan);
 
-    TreeNode* rakBumbuDapur = TCreateNode(buatDataRak("Rak Bumbu Dapur"));
-    TaddChild(root, rakDapur);
-  
-    TreeNode* rakBeautydanProduct = TCreateNode(buatDataRak("Rak Beauty & Product"));
-    TaddChild(root, rakBeautydanProduct);
+    TreeNode* rakBumbuDapur = TCreateNode(buatDataRak("Rak Bumbu Dapur", 5));
+    TaddChild(root, rakBumbuDapur);
 
-    TreeNode* rak
+    TreeNode* rakBeautyProduct = TCreateNode(buatDataRak("Rak Beauty & Product", 5));
+    TaddChild(root, rakBeautyProduct);
 
-    // Subrak dari Rak Makanan
-    TreeNode* makananRingan = TCreateNode(buatDataRak("Makanan Ringan"));
-    TreeNode* makananPokok = TCreateNode(buatDataRak("Makanan Pokok"));
+    // Sub-rak Rak Makanan
+    TreeNode* makananRingan = TCreateNode(buatDataRak("Makanan Ringan", 2));
+    TreeNode* makananPokok = TCreateNode(buatDataRak("Makanan Pokok", 2));
     TaddChild(rakMakanan, makananRingan);
     TaddChild(rakMakanan, makananPokok);
-    // ini buat dapur 
 
-    TreeNode* airputih = TCreateNode(buatDataRak("Air Putih"));
-    TreeNode* jus = TCreateNode(buatDataRak("Jus"));
-    TaddChild(rakMinuman, Airputih);
+    // Sub-rak Rak Minuman
+    TreeNode* airPutih = TCreateNode(buatDataRak("Air Putih", 2));
+    TreeNode* jus = TCreateNode(buatDataRak("Jus", 2));
+    TaddChild(rakMinuman, airPutih);
     TaddChild(rakMinuman, jus);
 
-    TreeNode* kecap = TCreateNode(buatDataRak("Kecap"));
-    TreeNode* saos = TCreateNode(buatDataRak("Saos"));
+    // Sub-rak Rak Bumbu Dapur
+    TreeNode* kecap = TCreateNode(buatDataRak("Kecap", 2));
+    TreeNode* saos = TCreateNode(buatDataRak("Saos", 2));
     TaddChild(rakBumbuDapur, kecap);
     TaddChild(rakBumbuDapur, saos);
 
-    TreeNode* lipstik = TCreateNode(buatDataRak("Lipstik"));
-    TreeNode* bedak = TCreateNode(buatDataRak("Bedak"));
-    TaddChild(rakBeautydanProduct, lipstik);
-    TaddChild(rakBeautydanProduct, Bedak);
+    // Sub-rak Rak Beauty & Product
+    TreeNode* lipstik = TCreateNode(buatDataRak("Lipstik", 2));
+    TreeNode* bedak = TCreateNode(buatDataRak("Bedak", 2));
+    TaddChild(rakBeautyProduct, lipstik);
+    TaddChild(rakBeautyProduct, bedak);
 
-
-    TreeNode* ma = TCreateNode(buatDataRak("Makanan Ringan"));
-    TreeNode* makananBerat = TCreateNode(buatDataRak(""))
-    // Isi dari makanan ringan (contoh: Lays)
-    TreeNode* chitato = TCreateNode(buatDataRak("Chitato"));
+    // Item dalam Makanan Ringan
+    TreeNode* chitato = TCreateNode(buatDataRak("Chitato", 1));
+    TreeNode* momogi = TCreateNode(buatDataRak("Momogi", 1));
     TaddChild(makananRingan, chitato);
-    TreeNode* momogi = TCreateNode(buatDataRak("Momogi"));
-    TaddChild(makananRingan, chitato);
+    TaddChild(makananRingan, momogi);
 
-    TreeNode* vit = TCreateNode(buatDataRak("Vit"));
-    TaddChild(airputih, vit);
-    TreeNode* aqua = TCreateNode(buatDataRak("Aqua"));
-    TaddChild(airputih, aqua);
-    TreeNode* lemineral = TCreateNode(buatDataRak("Le Mineral"));
-    TaddChild(airputih, lemineral);
+    TaddChild(chitato, TCreateNode(buatDataRak("Keju", 1)));
+    TaddChild(chitato, TCreateNode(buatDataRak("Sapi Panggang", 1)));
+    TaddChild(momogi, TCreateNode(buatDataRak("Jagung Bakar", 1)));
 
-    TreeNode* buavita = TCreateNode(buatDataRak("Buavita"));
-    TaddChild(jus, buavita);
+    // Item dalam Air Putih
+    TaddChild(airPutih, TCreateNode(buatDataRak("Vit", 1)));
+    TaddChild(airPutih, TCreateNode(buatDataRak("Aqua", 1)));
+    TaddChild(airPutih, TCreateNode(buatDataRak("Le Mineral", 1)));
 
-    TreeNode* abc = TCreateNode(buatDataRak("ABC"));
-    TaddChild(kecap, ABC);
-    TreeNode* bango = TCreateNode(buatDataRak("Bango"));
-    TaddChild(kecap, Bango);
-    TreeNode* rania = TCreateNode(buatDataRak("Rania"));
-    TaddChild(kecap, rania);
+    // Item dalam Jus
+    TaddChild(jus, TCreateNode(buatDataRak("Buavita", 1)));
 
-    TreeNode* indofood = TCreateNode(buatDataRak("Indofood"));
-    TaddChild(saos, indofood);
-    TreeNode* belibis = TCreateNode(buatDataRak("Belibas"));
-    TaddChild(saos, belibis);
-    TreeNode* sasa = TCreateNode(buatDataRak("Sasa"));
-    TaddChild(saos, sasa);
+    // Item dalam Kecap
+    TaddChild(kecap, TCreateNode(buatDataRak("ABC", 1)));
+    TaddChild(kecap, TCreateNode(buatDataRak("Bango", 1)));
+    TaddChild(kecap, TCreateNode(buatDataRak("Rania", 1)));
 
-    TreeNode* makeover = TCreateNode(buatDataRak("Make Over"));
-    TaddChild(lipstik, makeover);
-    TreeNode* implora = TCreateNode(buatDataRak("Implora"));
-    TaddChild(lipstik, implora);
-    TreeNode* maybelline = TCreateNode(buatDataRak("Maybelline"));
-    TaddChild(lipstik, maybelline);
+    // Item dalam Saos
+    TaddChild(saos, TCreateNode(buatDataRak("Indofood", 1)));
+    TaddChild(saos, TCreateNode(buatDataRak("Belibis", 1)));
+    TaddChild(saos, TCreateNode(buatDataRak("Sasa", 1)));
 
-    TreeNode* wardah = TCreateNode(buatDataRak("Wardah"));
-    TaddChild(bedak, wardah);
-    TreeNode* luxcrime = TCreateNode(buatDataRak("Luxcrime"));
-    TaddChild(bedak, luxcrime);
-    TreeNode* emma = TCreateNode(buatDataRak("Emma"));
-    TaddChild(bedak, emma);
+    // Item dalam Lipstik
+    TaddChild(lipstik, TCreateNode(buatDataRak("Make Over", 1)));
+    TaddChild(lipstik, TCreateNode(buatDataRak("Implora", 1)));
+    TaddChild(lipstik, TCreateNode(buatDataRak("Maybelline", 1)));
 
+    // Item dalam Bedak
+    TaddChild(bedak, TCreateNode(buatDataRak("Wardah", 1)));
+    TaddChild(bedak, TCreateNode(buatDataRak("Luxcrime", 1)));
+    TaddChild(bedak, TCreateNode(buatDataRak("Emma", 1)));
 
-    TaddChild()
-    // Varian dari Lays
-    TaddChild(chitato, TCreateNode(buatDataRak("Keju")));
-    TaddChild(chitato, TCreateNode(buatDataRak("Sapi Panggang")));
-    TaddChild(momogi, TCreateNode(buatDataRak("")))
-    // Subrak dari Rak Kecantikan
-    TreeNode* wardah = TCreateNode(buatDataRak("Wardah"));
-    TaddChild(rakKecantikan, wardah);
-    TaddChild(wardah, TCreateNode(buatDataRak("Lipstick")));
-    TaddChild(wardah, TCreateNode(buatDataRak("Bedak")));
+    // Tambahan: Subrak wardah di rakKecantikan
+    TreeNode* wardahKecantikan = TCreateNode(buatDataRak("Wardah", 2));
+    TaddChild(rakKecantikan, wardahKecantikan);
+    TaddChild(wardahKecantikan, TCreateNode(buatDataRak("Lipstick", 1)));
+    TaddChild(wardahKecantikan, TCreateNode(buatDataRak("Bedak", 1)));
 
     setParentPointersRecursive(root);
     return root;
 }
+

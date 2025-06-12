@@ -3,7 +3,7 @@
 
 #include "items.h"
 #include "NonBinaryTree.h"
-
+#define MAXPATH 100
 typedef struct {
     char* namaLokasi;
     int jarakDariParent;

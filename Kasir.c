@@ -21,9 +21,9 @@ void prosesPelanggan(Queue *Q)
     infotype pelanggan;
     deQueue(Q, &pelanggan);
 
-    double totalBelanja = getTotalHargaKeranjang(pelanggan.KPelanggan);
+    // double totalBelanja = getTotalHargaKeranjang(pelanggan.KPelanggan);
 
-    printf("Pelanggan %s telah dilayani. Total belanja: %.2f\n", pelanggan.nama, totalBelanja);
+    //printf("Pelanggan %s telah dilayani. Total belanja: %.2f\n", pelanggan.nama, totalBelanja);
 }
 
 // Fungsi tampilkan antrian

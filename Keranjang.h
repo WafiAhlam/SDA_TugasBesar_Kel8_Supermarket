@@ -37,5 +37,8 @@ double getTotalHargaKeranjang(const Keranjang* keranjang);
 // Membersihkan semua item dari keranjang (free memory)
 void clearKeranjang(Keranjang* keranjang);
 void displayKeranjang(const Keranjang* keranjang);
+//float hitungTotalBelanja(Keranjang* keranjang);
+void tambahBarangKeKeranjang(Keranjang* keranjang, Barang barang, int jumlah);
+void freeKeranjang(Keranjang* keranjang);
 
 #endif // KERANJANG_H

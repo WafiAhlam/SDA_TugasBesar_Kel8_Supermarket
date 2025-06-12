@@ -19,7 +19,8 @@
 typedef struct item {
     char idbarang[MAX_ID_BARANG];
     char namabarang[MAX_NAMA_BARANG];
-    double harga;
+    float harga;
+    // double harga;
 } item;
 
 // Node untuk daftar item (mengadaptasi ElmtList dari linkedlist.c)
@@ -31,6 +32,7 @@ typedef struct ItemNode {
 
 // AddressItemNode adalah pointer ke ItemNode (mengadaptasi address dari linkedlist.c)
 typedef ItemNode *AddressItemNode;
+typedef ItemNode Barang;
 
 // Struktur Listitem (mengadaptasi List dari linkedlist.c)
 // Menggunakan head sebagai First, dan tail untuk efisiensi InsertLast

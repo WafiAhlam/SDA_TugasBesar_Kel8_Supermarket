@@ -3,5 +3,5 @@
 #include "TreeRak.h" // Perlu definisi TreeNode
 
 TreeNode* setupAndPopulateSupermarket();
-
+void bebaskanLayoutSupermarket(TreeNode* root);
 #endif

@@ -2,7 +2,7 @@
 #include "items.h"
 
 // Fungsi untuk membuat Listitem kosong
-void CreateListItem(Listitem *L) {
+void CreateListItem(Listitem *L,const char* type) {
     L->head = Nil;
     L->tail = Nil;
     // printf yang ada sebelumnya dihapus agar lebih bersih
@@ -10,7 +10,7 @@ void CreateListItem(Listitem *L) {
 
 // Fungsi untuk memeriksa apakah Listitem kosong
 boolean ListItemEmpty(Listitem L) {
-    return (L->head == Nil);
+    return (L.head == Nil);
 }
 
 // Fungsi untuk membuat node item baru
