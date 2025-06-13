@@ -9,10 +9,12 @@
 
 typedef struct Pelanggan {
     char nama[50];
+    char waktuDatang[50];
     KeranjangBelanja* keranjang;
 } Pelanggan;
 
 // ... (sisa deklarasi fungsi)
 void menuPelanggan(TreeNode* rootSupermarket, RakBTree* rootAVL); // Perlu akses ke AVL juga
+void saveCustomerReceipt(Pelanggan p);
 
 #endif
