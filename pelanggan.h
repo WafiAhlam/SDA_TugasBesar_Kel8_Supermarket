@@ -1,19 +1,18 @@
+// File: pelanggan.h (REVISED)
 #ifndef PELANGGAN_H
 #define PELANGGAN_H
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Keranjang.h"
+#include "Keranjang.h" 
 #include "TreeRak.h"
-
 
 typedef struct Pelanggan {
     char nama[50];
-    Keranjang* KPelanggan;
+    KeranjangBelanja* keranjang;
 } Pelanggan;
 
-void pelangganMenu();
-void sesiBelanjaInteraktif(TreeNode* rootSupermarket);
-void menuPelanggan(TreeNode* rootSupermarket);
+// ... (sisa deklarasi fungsi)
+void menuPelanggan(TreeNode* rootSupermarket, RakBTree* rootAVL); // Perlu akses ke AVL juga
 
 #endif

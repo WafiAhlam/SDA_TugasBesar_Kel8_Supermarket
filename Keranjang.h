@@ -1,44 +1,51 @@
-#ifndef KERANJANG_H
-#define KERANJANG_H
+#ifndef KERANJANG_BELANJA_H
+#define KERANJANG_BELANJA_H
 
-#include "items.h" // Bergantung pada item.h
+#include "avl.h"      // Diperlukan untuk definisi 'Produk'
+#include "boolean.h"  // Diperlukan untuk tipe data boolean
 
-// Node untuk stack keranjang
-typedef struct NodeKeranjang {
-    item* barang; // Data yang disimpan adalah Item
-    struct NodeKeranjang* next;
-} NodeKeranjang;
+/**
+ * File: keranjang_belanja.h
+ * Deskripsi: Header untuk ADT Keranjang Belanja Pelanggan.
+ * Diimplementasikan sebagai Linked List untuk fleksibilitas maksimal.
+ */
 
-// Struktur Stack Keranjang
+// Node untuk setiap item unik di dalam keranjang
+typedef struct KeranjangNode {
+    Produk infoProduk;           // Informasi lengkap produk
+    int    kuantitas;              // Jumlah produk ini yang ada di keranjang
+    struct KeranjangNode *next;  // Pointer ke item berikutnya
+} KeranjangNode;
+
+// Struktur utama yang merepresentasikan keranjang belanja
 typedef struct {
-    NodeKeranjang* top;
-    int count; // Jumlah item dalam keranjang
-} Keranjang;
+    KeranjangNode* head;           // Pointer ke item pertama di keranjang
+    int            jumlahItemUnik; // Jumlah jenis produk yang berbeda
+    double         totalHarga;     // Total harga semua barang di keranjang
+} KeranjangBelanja;
 
-// Inisialisasi keranjang
-Keranjang* createKeranjang();
 
-// Operasi Stack
-// Menambah item ke keranjang
-void pushKeranjang(Keranjang* keranjang, item* barang);
+// --- PROTOTYPE FUNGSI KERANJANG BELANJA ---
 
-// Mengeluarkan item dari keranjang
-item* popKeranjang(Keranjang* keranjang); // Mengembalikan Item yang di-pop
+// Membuat dan mengembalikan pointer ke keranjang belanja baru yang kosong.
+KeranjangBelanja* createKeranjang();
 
-// Melihat item teratas tanpa mengeluarkan
-item* peekKeranjang(const Keranjang* keranjang);
+// Memeriksa apakah keranjang belanja kosong.
+boolean isKeranjangEmpty(KeranjangBelanja* keranjang);
 
-// Memeriksa apakah keranjang kosong
-int isKeranjangEmpty(const Keranjang* keranjang);
+// Menambahkan produk ke keranjang.
+// Jika produk sudah ada, kuantitasnya akan ditambah.
+// Jika belum ada, item baru akan dibuat.
+void tambahProdukKeKeranjang(KeranjangBelanja* keranjang, Produk produk, int kuantitas);
 
-// Menghitung total harga dalam keranjang
-double getTotalHargaKeranjang(const Keranjang* keranjang);
+// Mengurangi kuantitas produk dari keranjang.
+// Jika kuantitas menjadi nol atau kurang, produk akan dihapus sepenuhnya.
+void kurangiProdukDariKeranjang(KeranjangBelanja* keranjang, const char* idProduk, int kuantitas);
 
-// Membersihkan semua item dari keranjang (free memory)
-void clearKeranjang(Keranjang* keranjang);
-void displayKeranjang(const Keranjang* keranjang);
-//float hitungTotalBelanja(Keranjang* keranjang);
-void tambahBarangKeKeranjang(Keranjang* keranjang, Barang barang, int jumlah);
-void freeKeranjang(Keranjang* keranjang);
+// Menampilkan isi keranjang belanja secara rapi.
+void displayKeranjang(KeranjangBelanja* keranjang);
 
-#endif // KERANJANG_H
+// Menghancurkan keranjang dan membebaskan semua memori yang digunakan.
+void destroyKeranjang(KeranjangBelanja** keranjang);
+
+#endif // KERANJANG_BELANJA_H

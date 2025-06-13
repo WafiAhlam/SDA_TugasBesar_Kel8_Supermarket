@@ -1,73 +1,47 @@
 #ifndef ITEMS_H
 #define ITEMS_H
-#include <stdio.h> // Untuk NULL dan printf
-#include <stdlib.h> // Untuk malloc, free
-#include <string.h> // Untuk strncpy
-#include "BOOLEAN.H"
 
-#define MAX_ID_BARANG 20
-#define MAX_NAMA_BARANG 50
+#include "boolean.h" // Asumsi boolean.h sudah ada
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-// Definisi boolean (dari linkedlist.c)
-#define true 1
-#define false 0
+// Include avl.h untuk mendapatkan definisi Produk
+#include "Avl.h" // <<< PENTING: Pastikan ini mengarah ke file avl.h yang benar
 
-// Definisi Nil (dari linkedlist.c)
-#define Nil NULL
+// Tidak perlu mendefinisikan 'item' terpisah jika kita menggunakan 'Produk' dari avl.h
+// struct item {
+//     char idbarang[20];
+//     char namabarang[100];
+//     float harga;
+// };
+// typedef struct item item;
 
-// Struktur data untuk item (barang)
-typedef struct item {
-    char idbarang[MAX_ID_BARANG];
-    char namabarang[MAX_NAMA_BARANG];
-    float harga;
-    // double harga;
-} item;
-
-// Node untuk daftar item (mengadaptasi ElmtList dari linkedlist.c)
+// Node untuk Linked List item di dalam setiap rak
+// Sekarang ItemNode akan menyimpan salinan Produk dan stoknya di rak tersebut
 typedef struct ItemNode {
-    int stock; // Stok untuk item ini di inventaris
-    struct ItemNode* next;
-    item dataBarang; // Data item yang sebenarnya
+    Produk dataProduk; // Menggunakan Produk dari avl.h
+    int stock;
+    struct ItemNode *next;
 } ItemNode;
 
-// AddressItemNode adalah pointer ke ItemNode (mengadaptasi address dari linkedlist.c)
 typedef ItemNode *AddressItemNode;
-typedef ItemNode Barang;
+#define Nil NULL // Definisi untuk pointer kosong
 
-// Struktur Listitem (mengadaptasi List dari linkedlist.c)
-// Menggunakan head sebagai First, dan tail untuk efisiensi InsertLast
-typedef struct Listitem {
-    char type[50]; // Contoh: "Elektronik", "Makanan", dll.
-    AddressItemNode head; // Menggantikan First(L)
-    AddressItemNode tail; // Untuk InsertLast yang efisien
+// Struktur List untuk menyimpan daftar item dalam sebuah rak
+typedef struct {
+    AddressItemNode head;
+    AddressItemNode tail;
 } Listitem;
 
-// Prototipe fungsi-fungsi untuk Item dan Listitem
-
-
-// Fungsi untuk membuat node item baru (mengadaptasi Alokasi)
-AddressItemNode CreateItemNode(item barang, int stock);
-
-// Fungsi untuk dealokasi node item (mengadaptasi DeAlokasi)
-void DeAlokasiItemNode(AddressItemNode P);
-
-// Fungsi untuk membuat Listitem kosong (mengadaptasi CreateList)
-void CreateListItem(Listitem *L, const char* type);
-
-// Fungsi untuk memeriksa apakah Listitem kosong (mengadaptasi ListEmpty)
+// --- Deklarasi Fungsi Listitem ---
+void CreateListItem(Listitem *L); // Tidak perlu type parameter
 boolean ListItemEmpty(Listitem L);
-
-// Fungsi untuk menambahkan item ke akhir list (mengadaptasi InsertLast)
-void InsertLastItem(Listitem *L, item barang, int stock);
-
-// Fungsi untuk mencari item berdasarkan ID barang (mengadaptasi Search)
-// Mengembalikan pointer ke ItemNode jika ditemukan, NULL jika tidak
-AddressItemNode SearchItem(Listitem L, const char* idBarang);
-
-// Fungsi untuk menampilkan semua item dalam list (mengadaptasi PrintInfo)
+AddressItemNode CreateItemNode(Produk produk, int stock); // Menerima Produk
+void DeallocateListItem(Listitem *L);
+void InsertLastItem(Listitem *L, Produk produk, int stock); // Menerima Produk
+AddressItemNode SearchItem(Listitem L, char* idProdukCari); // Menerima idProduk (string)
 void PrintListItem(Listitem L);
+void displayItem(const Produk* produk); // Menerima pointer ke Produk
 
-// Fungsi untuk menampilkan detail satu item
-void displayItem(const item* barang);
-
-#endif
+#endif // ITEMS_H

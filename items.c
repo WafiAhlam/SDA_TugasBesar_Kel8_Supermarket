@@ -1,11 +1,9 @@
-// File: item.c
-#include "items.h"
+#include "items.h" // Pastikan ini meng-include header yang baru
 
 // Fungsi untuk membuat Listitem kosong
-void CreateListItem(Listitem *L,const char* type) {
+void CreateListItem(Listitem *L) {
     L->head = Nil;
     L->tail = Nil;
-    // printf yang ada sebelumnya dihapus agar lebih bersih
 }
 
 // Fungsi untuk memeriksa apakah Listitem kosong
@@ -14,10 +12,10 @@ boolean ListItemEmpty(Listitem L) {
 }
 
 // Fungsi untuk membuat node item baru
-AddressItemNode CreateItemNode(item barang, int stock) {
+AddressItemNode CreateItemNode(Produk produk, int stock) { // Menerima Produk
     AddressItemNode newNode = (AddressItemNode)malloc(sizeof(ItemNode));
     if (newNode != Nil) {
-        newNode->dataBarang = barang;
+        newNode->dataProduk = produk; // Salin seluruh struktur Produk
         newNode->stock = stock;
         newNode->next = Nil;
     }
@@ -25,8 +23,8 @@ AddressItemNode CreateItemNode(item barang, int stock) {
 }
 
 // Fungsi untuk menambahkan item ke akhir list
-void InsertLastItem(Listitem *L, item barang, int stock) {
-    AddressItemNode P = CreateItemNode(barang, stock);
+void InsertLastItem(Listitem *L, Produk produk, int stock) { // Menerima Produk
+    AddressItemNode P = CreateItemNode(produk, stock);
     if (P != Nil) {
         if (ListItemEmpty(*L)) {
             L->head = P;
@@ -35,20 +33,30 @@ void InsertLastItem(Listitem *L, item barang, int stock) {
             L->tail->next = P;
             L->tail = P;
         }
-        // printf yang ada sebelumnya dihapus
     }
 }
 
-// Fungsi untuk mencari item berdasarkan ID barang
-AddressItemNode SearchItem(Listitem L, const char* idBarang) {
+// Fungsi untuk mencari item berdasarkan ID produk
+AddressItemNode SearchItem(Listitem L, char* idProdukCari) { // Menerima idProduk (string)
     AddressItemNode P = L.head;
     while (P != Nil) {
-        if (strcmp(P->dataBarang.idbarang, idBarang) == 0) {
+        if (strcmp(P->dataProduk.idProduk, idProdukCari) == 0) { // Bandingkan idProduk
             return P; // Item ditemukan
         }
         P = P->next;
     }
     return Nil; // Item tidak ditemukan
+}
+
+void DeallocateListItem(Listitem *L) {
+    AddressItemNode P = L->head;
+    while (P != Nil) {
+        AddressItemNode temp = P;
+        P = P->next;
+        free(temp);
+    }
+    L->head = Nil;
+    L->tail = Nil;
 }
 
 // Fungsi untuk menampilkan semua item dalam sebuah list (rak)
@@ -61,8 +69,8 @@ void PrintListItem(Listitem L) {
         printf("----------------------------------\n");
         printf("Daftar Barang di Lokasi ini:\n");
         while (P != Nil) {
-            printf("%d. %s (ID: %s, Stok: %d, Harga: %.0f)\n", 
-                   i, P->dataBarang.namabarang, P->dataBarang.idbarang, P->stock, P->dataBarang.harga);
+            printf("%d. %s (ID: %s, Stok: %d, Harga: %.0f)\n",
+                     i, P->dataProduk.nama, P->dataProduk.idProduk, P->stock, P->dataProduk.harga); // Akses dataProduk
             i++;
             P = P->next;
         }
@@ -71,7 +79,7 @@ void PrintListItem(Listitem L) {
 }
 
 // Fungsi untuk menampilkan detail satu item (tidak banyak berubah)
-void displayItem(const item* barang) {
+void displayItem(const Produk* produk) { // Menerima pointer ke Produk
     printf("ID: %s, Nama: %s, Harga: %.2f",
-           barang->idbarang, barang->namabarang, barang->harga);
+           produk->idProduk, produk->nama, produk->harga);
 }

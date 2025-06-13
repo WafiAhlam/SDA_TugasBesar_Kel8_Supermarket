@@ -1,47 +1,44 @@
+/**
+ * File: admin.c (REVISED)
+ * Deskripsi: Implementasi menu dan fungsionalitas untuk admin.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "admin.h"
 
+// Struct untuk data admin, bisa tetap di sini atau dipindah ke admin.h jika perlu
 typedef struct {
     char username[50];
     char password[50];
 } Admin;
 
-void menuAdmin(TreeNode* rootSupermarket) {
-    int pilihan;
-    do {
-        printf("\n=== MENU MASUK ADMIN ===\n");
-        printf("1. Login Admin\n");
-        printf("2. Registrasi Admin\n");
-        printf("0. Kembali ke menu utama\n");
-        printf("Pilihan: ");
-        scanf("%d", &pilihan);
 
-        switch (pilihan) {
-            case 1:
-                if (loginAdmin()) {
-                    adminMenu(rootSupermarket);  // masuk ke menu admin
-                } else {
-                    printf("Login gagal. Username atau password salah.\n");
-                }
-                break;
-            case 2:
-                registerAdmin();  // daftar admin baru
-                break;
-            case 0:
-                printf("Kembali ke menu utama...\n");
-                break;
-            default:
-                printf("Pilihan tidak valid!\n");
-        }
-    } while (pilihan != 0);
+// --- FUNGSI HELPER UNTUK TAMPILAN & INPUT ---
+void clearScreen() {
+    // Gunakan "cls" untuk Windows, "clear" untuk Linux/macOS.
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
+
+void pressEnterToContinue() {
+    printf("\nTekan Enter untuk melanjutkan...");
+    // Membersihkan buffer input yang mungkin tersisa dari scanf
+    while(getchar() != '\n');
+    getchar(); // Menunggu user menekan Enter
+}
+
+
+// --- FUNGSI LOGIN & REGISTRASI ---
+// (Fungsi isUsernameExist, registerAdmin, loginAdmin Anda sudah baik, tidak perlu diubah)
+// Saya salin kembali di sini agar file lengkap.
 
 int isUsernameExist(const char* username) {
     FILE* file = fopen("admin_data.txt", "r");
     if (!file) return 0;
-
     Admin temp;
     while (fscanf(file, "%s %s", temp.username, temp.password) != EOF) {
         if (strcmp(temp.username, username) == 0) {
@@ -49,47 +46,51 @@ int isUsernameExist(const char* username) {
             return 1;
         }
     }
-
     fclose(file);
     return 0;
 }
 
 void registerAdmin() {
+    clearScreen();
     Admin newAdmin;
     printf("=== REGISTRASI ADMIN ===\n");
-    printf("Masukkan username: ");
-    scanf("%s", newAdmin.username);
+    printf("Masukkan username baru: ");
+    scanf("%49s", newAdmin.username);
 
     if (isUsernameExist(newAdmin.username)) {
-        printf("Username sudah terdaftar!\n");
+        printf("\nUsername sudah terdaftar!\n");
+        pressEnterToContinue();
         return;
     }
 
-    printf("Masukkan password: ");
-    scanf("%s", newAdmin.password);
+    printf("Masukkan password baru: ");
+    scanf("%49s", newAdmin.password);
 
     FILE* file = fopen("admin_data.txt", "a");
     if (file == NULL) {
-        printf("Gagal membuka file!\n");
+        printf("\nGagal membuka file data admin!\n");
+        pressEnterToContinue();
         return;
     }
-
     fprintf(file, "%s %s\n", newAdmin.username, newAdmin.password);
     fclose(file);
-    printf("Registrasi berhasil!\n");
+    printf("\nRegistrasi berhasil!\n");
+    pressEnterToContinue();
 }
 
 int loginAdmin() {
+    clearScreen();
     Admin login;
     printf("=== LOGIN ADMIN ===\n");
     printf("Masukkan username: ");
-    scanf("%s", login.username);
+    scanf("%49s", login.username);
     printf("Masukkan password: ");
-    scanf("%s", login.password);
+    scanf("%49s", login.password);
 
     FILE* file = fopen("admin_data.txt", "r");
     if (file == NULL) {
-        printf("Belum ada admin terdaftar!\n");
+        printf("\nBelum ada admin terdaftar!\n");
+        pressEnterToContinue();
         return 0;
     }
 
@@ -97,42 +98,188 @@ int loginAdmin() {
     while (fscanf(file, "%s %s", temp.username, temp.password) != EOF) {
         if (strcmp(login.username, temp.username) == 0 && strcmp(login.password, temp.password) == 0) {
             fclose(file);
-            printf("Login berhasil. Selamat datang, %s!\n", login.username);
+            printf("\nLogin berhasil. Selamat datang, %s!\n", login.username);
+            pressEnterToContinue();
             return 1;
         }
     }
 
     fclose(file);
-    printf("Login gagal. Username atau password salah.\n");
+    printf("\nLogin gagal. Username atau password salah.\n");
+    pressEnterToContinue();
     return 0;
 }
 
-void adminMenu(TreeNode* rootSupermarket) {
+
+// --- FUNGSI MENU UTAMA ADMIN ---
+
+// Fungsi ini yang akan dipanggil dari main.c
+void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
     int pilihan;
     do {
-        printf("\n=== MENU ADMIN ===\n");
-        printf("1. Tambah Produk\n");
-        printf("2. Hapus Produk\n");
-        printf("3. Lihat Daftar Produk\n");
-        printf("0. Logout\n");
+        clearScreen();
+        printf("=========================\n");
+        printf("      MODE ADMIN\n");
+        printf("=========================\n");
+        printf("1. Login\n");
+        printf("2. Registrasi Admin Baru\n");
+        printf("0. Kembali ke Menu Utama\n");
+        printf("=========================\n");
         printf("Pilihan Anda: ");
-        scanf("%d", &pilihan);
+        
+        if (scanf("%d", &pilihan) != 1) {
+            pilihan = -1;
+        }
+        while(getchar() != '\n'); // Clear buffer
 
         switch(pilihan) {
             case 1:
-                printf("-> Tambah produk (belum diimplementasi).\n");
+                if (loginAdmin()) {
+                    // Jika login berhasil, masuk ke menu utama fungsionalitas admin
+                    prosesMenuAdmin(rootAVL, rootLayout);
+                }
                 break;
             case 2:
-                printf("-> Hapus produk (belum diimplementasi).\n");
-                break;
-            case 3:
-                printf("-> Lihat produk (belum diimplementasi).\n");
+                registerAdmin();
                 break;
             case 0:
-                printf("-> Logout.\n");
+                printf("\nKembali ke menu utama...\n");
                 break;
             default:
-                printf("-> Pilihan tidak valid!\n");
+                printf("\nPilihan tidak valid!\n");
+                pressEnterToContinue();
         }
     } while (pilihan != 0);
+}
+
+// Menu ini baru muncul setelah admin berhasil login
+void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
+    int pilihan;
+    do {
+        clearScreen();
+        printf("==========================================\n");
+        printf("               MENU UTAMA ADMIN\n");
+        printf("==========================================\n");
+        printf("1. Tambah Produk Baru ke Database\n");
+        printf("2. Hapus Produk dari Database\n");
+        printf("3. Lihat Semua Produk (Database AVL)\n");
+        printf("4. Tambah Stok Produk ke Rak Fisik\n");
+        printf("5. Lihat Peta Layout Supermarket\n");
+        printf("0. Logout\n");
+        printf("==========================================\n");
+        printf("Pilihan Anda: ");
+        
+        if (scanf("%d", &pilihan) != 1) {
+            pilihan = -1;
+        }
+        while(getchar() != '\n');
+
+        switch(pilihan) {
+            case 1:
+                menuTambahProduk(rootAVL);
+                break;
+            case 2:
+                menuHapusProduk(rootAVL, rootLayout);
+                break;
+            case 3:
+                menuLihatProduk(*rootAVL);
+                break;
+            case 4:
+                menuTambahStokKeRak(*rootAVL, rootLayout);
+                break;
+            case 5:
+                menuLihatPeta(rootLayout);
+                break;
+            case 0:
+                printf("\nLogout dari sesi admin...\n");
+                pressEnterToContinue();
+                break;
+            default:
+                printf("\nPilihan tidak valid!\n");
+                pressEnterToContinue();
+        }
+    } while (pilihan != 0);
+}
+
+
+// --- FUNGSI UNTUK SETIAP OPSI MENU ADMIN (setelah login) ---
+// (Fungsi-fungsi ini saya pindahkan dari jawaban sebelumnya)
+
+void menuTambahProduk(RakBTree** rootAVL) {
+    clearScreen();
+    Produk p;
+    printf("--- Tambah Produk Baru ---\n");
+    printf("Masukkan ID Produk (e.g., BR001): ");
+    scanf("%19s", p.idProduk);
+    printf("Masukkan Nama Produk: ");
+    scanf(" %[^\n]", p.nama);
+    printf("Masukkan Harga Produk: ");
+    scanf("%f", &p.harga);
+    printf("Masukkan Stok Awal Global: ");
+    scanf("%d", &p.stok);
+
+    *rootAVL = insertProduk(*rootAVL, p);
+    printf("\nProduk '%s' berhasil ditambahkan ke database AVL.\n", p.nama);
+    pressEnterToContinue();
+}
+
+void menuHapusProduk(RakBTree** rootAVL, TreeNode* rootLayout) {
+    clearScreen();
+    char idHapus[20];
+    printf("--- Hapus Produk dari Database ---\n");
+    printf("Masukkan ID Produk yang akan dihapus: ");
+    scanf("%19s", idHapus);
+
+    if (searchProduk(*rootAVL, idHapus) == NULL) {
+        printf("\nProduk dengan ID '%s' tidak ditemukan.\n", idHapus);
+    } else {
+        *rootAVL = deleteProduk(*rootAVL, idHapus);
+        printf("\nProduk dengan ID '%s' telah dihapus dari database AVL.\n", idHapus);
+    }
+    pressEnterToContinue();
+}
+
+void menuLihatProduk(RakBTree* rootAVL) {
+    clearScreen();
+    printf("--- DAFTAR SEMUA PRODUK (Sorted by ID) ---\n\n");
+    if (rootAVL == NULL) {
+        printf("Database produk masih kosong.\n");
+    } else {
+        inOrderProduk(rootAVL);
+    }
+    printf("\n------------------------------------------\n");
+    pressEnterToContinue();
+}
+
+void menuTambahStokKeRak(RakBTree* rootAVL, TreeNode* rootLayout) {
+    clearScreen();
+    char idProduk[20], namaRak[100];
+    int jumlahStok;
+    printf("--- Tambah Stok ke Rak Fisik ---\n");
+    printf("Masukkan ID Produk: ");
+    scanf("%19s", idProduk);
+
+    RakBTree* nodeProduk = searchProduk(rootAVL, idProduk);
+    if (nodeProduk == NULL) {
+        printf("\nError: Produk dengan ID '%s' tidak ada di database.\n", idProduk);
+    } else {
+        printf("Masukkan Nama Rak Tujuan (e.g., 'Chitato Area'): ");
+        scanf(" %[^\n]", namaRak);
+        TreeNode* nodeRak = cariRakDenganNama(rootLayout, namaRak);
+
+        if (nodeRak == NULL) {
+            printf("\nError: Rak dengan nama '%s' tidak ditemukan.\n", namaRak);
+        } else {
+            printf("Masukkan jumlah stok yang akan ditaruh di rak: ");
+            scanf("%d", &jumlahStok);
+            tambahItemKeRak(nodeRak, nodeProduk->info, jumlahStok);
+        }
+    }
+    pressEnterToContinue();
+}
+
+void menuLihatPeta(TreeNode* rootLayout) {
+    clearScreen();
+    tampilkanPetaSupermarket(rootLayout);
+    pressEnterToContinue();
 }
