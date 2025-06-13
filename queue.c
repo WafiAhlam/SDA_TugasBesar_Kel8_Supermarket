@@ -43,56 +43,53 @@ QueueNode* newNode(infotype data) {
     return node;
 }
 
-/*Melekukan insertion pada queue*/
-void EnQueue(Queue *Q, infotype X) 
-{
-    if (is_Full(*Q)) return;
-
-    address add = Alokasi(X);
-    if (add != NULL) 
-    {
-        add->next = NULL;
-
-        if (is_Empty(*Q)) 
-        {
-            Q->front = add;
-            Q->rear = add;
-        } else {
-            Q->rear->next = add;
-            Q->rear = add;
-        }
-    }
-}
-
-/*Melakukan deletion pada queue*/
-void deQueue(Queue *Q, infotype *X) 
-{
-    if (is_Empty(*Q)) return;
-    address del = Q->front;
-    *X = del->info;
-    Q->front = Q->front->next;
-    if (Q->front == NULL) 
-    {
-        Q->rear = NULL;
-    }
-    free(del);
-}
-
-
-void PrintQueue(Queue q) {
-    address cursor = q.front;
-
-    if (is_Empty(q)) 
-    {
-        printf("Antrian kosong...\n");
+// Menambahkan data ke antrian
+void enqueue(Queue* q, infotype data) {
+    QueueNode* node = newNode(data);
+    if (node == NULL) {
+        printf("Gagal mengalokasi memori.\n");
         return;
     }
 
-    printf("Antrian sekarang:\n");
-    while (cursor != NULL) 
-    {
-        printf("- %s\n", cursor->info.nama);
-        cursor = cursor->next;
+    if (isQueueEmpty(*q)) {
+        q->front = node;
+        q->rear = node;
+    } else {
+        q->rear->next = node;
+        q->rear = node;
+    }
+}
+
+// Menghapus data dari antrian
+bool dequeue(Queue* q, infotype* dataOut) {
+    if (isQueueEmpty(*q)) {
+        return false;
+    }
+
+    QueueNode* temp = q->front;
+    *dataOut = temp->data;
+    q->front = q->front->next;
+
+    if (q->front == NULL) {
+        q->rear = NULL;
+    }
+
+    free(temp);
+    return true;
+}
+
+// Menampilkan isi queue
+void printQueue(Queue q) {
+    QueueNode* curr = q.front;
+    if (isQueueEmpty(q)) {
+        printf("Antrian kosong.\n");
+        return;
+    }
+
+    printf("Daftar antrian:\n");
+    while (curr != NULL) {
+        printf("- %s datang pada %s\n", curr->data.nama, curr->data.waktuDatang);
+        curr = curr->next;
     }
 }
 
@@ -100,6 +97,9 @@ void PrintQueue(Queue q) {
 void freeQueue(Queue* q) {
     infotype temp;
     while (dequeue(q, &temp)) {
-        // Jika perlu bebaskan alokasi tambahan (misal: string malloc di nama)
+        if (temp.KPelanggan != NULL) {
+            freeKeranjang(temp.KPelanggan); 
+            free(temp.KPelanggan);          
+        }
     }
 }

@@ -102,3 +102,15 @@ void displayKeranjang(const Keranjang* keranjang) {
     printf("---------------------\n");
     printf("Total Belanja: %.2f\n", getTotalHargaKeranjang(keranjang));
 }
+
+void freeKeranjang(Keranjang* keranjang) {
+    NodeKeranjang* current = keranjang->top;
+    while (current != NULL) {
+        NodeKeranjang* temp = current;
+        current = current->next;
+        // Jika barang dialokasikan dinamis, tambahkan: free(temp->barang);
+        free(temp);
+    }
+    keranjang->top = NULL;
+    keranjang->count = 0;
+}

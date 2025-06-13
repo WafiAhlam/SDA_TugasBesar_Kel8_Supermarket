@@ -2,6 +2,7 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
+#define MAX_PELANGGAN_KASIR 10
 #include "boolean.h"
 #include "linked.h"
 #include "pelanggan.h"
