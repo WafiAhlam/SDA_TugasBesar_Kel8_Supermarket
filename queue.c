@@ -1,38 +1,46 @@
-/*File body untuk ADT Queue*/
-/*Dibuat tanggal 28-3-2013*/
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "queue.h"
-#include "linked.h"
+#include "pelanggan.h" 
 
-/*Membuat sebuah queue baru dengan Front dan Rear NULL*/
-void CreateQueue(Queue *Q) 
-{
-    Q->front = NULL;
-    Q->rear = NULL;
+// Membuat queue kosong
+void createQueue(Queue* q) {
+    q->front = NULL;
+    q->rear = NULL;
 }
 
-/*Memeriksa apakah queue kosong */
-boolean is_Empty (Queue Q)
-{
-	return (Q.front == NULL && Q.rear == NULL);
+// Mengecek apakah queue kosong
+bool isQueueEmpty(Queue q) {
+    return (q.front == NULL && q.rear == NULL);
 }
 
-/*Memeriksa apakah queue penuh */
-boolean is_Full (Queue Q)
-{
-	int count = 0;
-    address p = Q.front;
+// /*Memeriksa apakah queue penuh */
+// boolean is_Full (Queue Q)
+// {
+// 	int count = 0;
+//     address p = Q.front;
 
-    while(p != NULL) 
-    {
-        count++;
-        if (count == NBElement) 
-        {
-            return true;
-        }
-        p = p->next;
+//     while(p != NULL) 
+//     {
+//         count++;
+//         if (count == NBElement) 
+//         {
+//             return true;
+//         }
+//         p = p->next;
+//     }
+//     return false;
+// }
+
+// Mengalokasi node baru
+QueueNode* newNode(infotype data) {
+    QueueNode* node = (QueueNode*)malloc(sizeof(QueueNode));
+    if (node != NULL) {
+        node->data = data;
+        node->next = NULL;
     }
-    return false;
+    return node;
 }
 
 /*Melekukan insertion pada queue*/
@@ -85,5 +93,13 @@ void PrintQueue(Queue q) {
     {
         printf("- %s\n", cursor->info.nama);
         cursor = cursor->next;
+    }
+}
+
+// Menghapus seluruh antrian
+void freeQueue(Queue* q) {
+    infotype temp;
+    while (dequeue(q, &temp)) {
+        // Jika perlu bebaskan alokasi tambahan (misal: string malloc di nama)
     }
 }

@@ -15,11 +15,13 @@ typedef struct Queue {
 } Queue;
 
 
-void CreateQueue (Queue *Q);
-boolean is_Empty (Queue Q);
-boolean is_Full (Queue Q);
+void createQueue(Queue* q);
+bool isQueueEmpty(Queue q)
+// boolean is_Full (Queue Q);
+QueueNode* newNode(infotype data);
 void EnQueue (Queue *Q, infotype X);
 void deQueue (Queue *Q, infotype *X);
 void PrintQueue(Queue q);
+void freeQueue(Queue* q);
 
 #endif
