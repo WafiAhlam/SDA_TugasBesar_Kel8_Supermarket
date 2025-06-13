@@ -15,5 +15,6 @@ typedef struct Pelanggan {
 void pelangganMenu();
 void sesiBelanjaInteraktif(TreeNode* rootSupermarket);
 void menuPelanggan(TreeNode* rootSupermarket);
+void saveCustomerReceipt(Pelanggan p);
 
 #endif

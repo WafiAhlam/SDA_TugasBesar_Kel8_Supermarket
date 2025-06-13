@@ -39,3 +39,27 @@ void menuPelanggan(TreeNode* rootSupermarket) {
     printf(">> Masuk ke Menu Pelanggan <<\n");
     pelangganMenu(); // panggil menu pelanggan yang kamu buat
 }
+
+void saveCustomerReceipt(Pelanggan p) {
+    char filename[100];
+    sprintf(filename, "struk_%s.txt", p.nama);
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Gagal membuat struk untuk %s\n", p.nama);
+        return;
+    }
+
+    fprintf(file, "STRUK BELANJA - %s\n", p.nama);
+    fprintf(file, "Waktu: %s\n", p.waktuDatang);
+    fprintf(file, "Daftar Barang:\n");
+
+    BarangNode* curr = p.KPelanggan->top;
+    double total = 0;
+    while (curr != NULL) {
+    fprintf(file, "- %s: %d\n", curr->barang.nama, curr->barang.harga);
+    total += curr->barang.harga;
+    curr = curr->next;
+    }
+    fprintf(file, "TOTAL: %.2lf\n", total);
+    fclose(file);
+}

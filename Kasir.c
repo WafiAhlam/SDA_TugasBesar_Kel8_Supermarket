@@ -1,33 +1,37 @@
 #include <stdio.h>
-#include "queue.h"
-#include "keranjang.h"  
+#include "Kasir.h"
+#include "Keranjang.h"
 
-// Fungsi tambah pelanggan ke antrian
-void tambahPelanggan(Queue *Q, infotype pelanggan) 
-{
-    EnQueue(Q, pelanggan);
+// Menambahkan pelanggan ke antrian
+void tambahPelanggan(Queue* Q, infotype pelanggan) {
+    enqueue(Q, pelanggan);
     printf("Pelanggan %s ditambahkan ke antrian.\n", pelanggan.nama);
 }
 
-// Fungsi proses pelanggan di depan antrian
-void prosesPelanggan(Queue *Q) 
-{
-    if (is_Empty(*Q)) 
-    {
-        printf("Antrian kosong, tidak ada pelanggan yang diproses.\n");
-        return;
+// Memproses pelanggan terdepan di antrian
+void prosesPelanggan(Queue* Q) {
+    if (isQueueEmpty(*Q)) {
+    printf("Antrian kosong, tidak ada pelanggan yang diproses.\n");
+    return;
     }
 
     infotype pelanggan;
-    deQueue(Q, &pelanggan);
+    if (dequeue(Q, &pelanggan)) {
+    double total = getTotalHargaKeranjang(pelanggan.KPelanggan);
+    printf("Pelanggan %s telah dilayani.\n", pelanggan.nama);
+    printf("Total belanja: Rp %.2f\n", total);
 
-    // double totalBelanja = getTotalHargaKeranjang(pelanggan.KPelanggan);
+    saveCustomerReceipt(pelanggan); // Simpan struk
 
-    //printf("Pelanggan %s telah dilayani. Total belanja: %.2f\n", pelanggan.nama, totalBelanja);
+    // Hapus keranjang dari memori
+    if (pelanggan.KPelanggan != NULL) {
+        freeKeranjang(pelanggan.KPelanggan);
+        free(pelanggan.KPelanggan);
+        }
+    }
 }
 
-// Fungsi tampilkan antrian
-void tampilkanAntrian(Queue Q) 
-{
-    PrintQueue(Q);
+// Menampilkan seluruh antrian
+void tampilkanAntrian(Queue Q) {
+printQueue(Q);
 }

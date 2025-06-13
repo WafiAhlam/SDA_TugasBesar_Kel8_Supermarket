@@ -136,3 +136,24 @@ void adminMenu(TreeNode* rootSupermarket) {
         }
     } while (pilihan != 0);
 }
+
+void saveAdminReport(Queue* q, const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Gagal membuka file %s untuk penulisan.\n", filename);
+        return;
+    }
+
+    QueueNode* current = q->front;
+    int totalKeseluruhan = 0;
+
+    while (current != NULL) {
+        double totalBelanja = getTotalHargaKeranjang(current->data.KPelanggan);
+        fprintf(file, "%s|%s|%.2lf\n", current->data.nama, current->data.waktuDatang, totalBelanja);
+        totalKeseluruhan += totalBelanja;
+        current = current->next;
+    }
+
+    fprintf(file, "TOTAL SEMUA PELANGGAN: %d\n", totalKeseluruhan);
+    fclose(file);
+}

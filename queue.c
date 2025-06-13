@@ -8,30 +8,13 @@
 void createQueue(Queue* q) {
     q->front = NULL;
     q->rear = NULL;
+    q->count = 0; // kalo mau ada maks pelanggan
 }
 
 // Mengecek apakah queue kosong
 bool isQueueEmpty(Queue q) {
     return (q.front == NULL && q.rear == NULL);
 }
-
-// /*Memeriksa apakah queue penuh */
-// boolean is_Full (Queue Q)
-// {
-// 	int count = 0;
-//     address p = Q.front;
-
-//     while(p != NULL) 
-//     {
-//         count++;
-//         if (count == NBElement) 
-//         {
-//             return true;
-//         }
-//         p = p->next;
-//     }
-//     return false;
-// }
 
 // Mengalokasi node baru
 QueueNode* newNode(infotype data) {
@@ -45,6 +28,11 @@ QueueNode* newNode(infotype data) {
 
 // Menambahkan data ke antrian
 void enqueue(Queue* q, infotype data) {
+    if (countQueue(*q) >= MAX_PELANGGAN_KASIR) {
+        printf("Antrian penuh. Maksimal %d pelanggan.\n", MAX_PELANGGAN_KASIR);
+        return;
+    }
+
     QueueNode* node = newNode(data);
     if (node == NULL) {
         printf("Gagal mengalokasi memori.\n");
@@ -58,10 +46,11 @@ void enqueue(Queue* q, infotype data) {
         q->rear->next = node;
         q->rear = node;
     }
+    q->count++;
 }
 
 // Menghapus data dari antrian
-bool dequeue(Queue* q, infotype* dataOut) {
+bool dequeue(Queue* q, infotype* dataOut) { 
     if (isQueueEmpty(*q)) {
         return false;
     }
@@ -75,6 +64,7 @@ bool dequeue(Queue* q, infotype* dataOut) {
     }
 
     free(temp);
+    q->count--;
     return true;
 }
 
@@ -102,4 +92,43 @@ void freeQueue(Queue* q) {
             free(temp.KPelanggan);          
         }
     }
+}
+
+// kalo mau ada maks pelanggan
+int countQueue(Queue q) {
+    return q.count;
+}
+
+void saveQueueToFile(Queue* q, const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Gagal membuka file %s untuk penulisan.\n", filename);
+        return;
+    }
+
+    QueueNode* current = q->front;
+    while (current != NULL) {
+        fprintf(file, "%s|%s\n", current->data.nama, current->data.waktuDatang);
+        current = current->next;
+    }
+
+    fclose(file);
+}
+
+void loadQueueFromFile(Queue* q, const char* filename) {
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Gagal membuka file %s untuk pembacaan.\n", filename);
+        return;
+    }
+
+    char line[200];
+    while (fgets(line, sizeof(line), file)) {
+        Pelanggan p;
+        sscanf(line, "%49[^|]|%49[^\n]", p.nama, p.waktuDatang);
+        p.KPelanggan = NULL; 
+        enqueue(q, p);
+    }
+
+    fclose(file);
 }

@@ -2,27 +2,36 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
-#define MAX_PELANGGAN_KASIR 10
+#define MAX_PELANGGAN_KASIR 10 // kalo mau ada batas maks pelanggan di kasir
 #include "boolean.h"
 #include "linked.h"
 #include "pelanggan.h"
-#define NBElement 10
 
 typedef Pelanggan infotype;
+
+typedef struct QueueNode {
+    infotype data;
+    struct QueueNode* next;
+} QueueNode;
 
 typedef struct Queue {
     address front;
     address rear;
+    int count;
 } Queue;
 
 
 void createQueue(Queue* q);
-bool isQueueEmpty(Queue q)
+bool isQueueEmpty(Queue q);
 // boolean is_Full (Queue Q);
 QueueNode* newNode(infotype data);
-void EnQueue (Queue *Q, infotype X);
-void deQueue (Queue *Q, infotype *X);
+void enqueue(Queue* q, infotype data);
+void dequeue(Queue* q, infotype* dataOut);
 void PrintQueue(Queue q);
 void freeQueue(Queue* q);
+int countQueue(Queue q);
+
+void saveQueueToFile(Queue* q, const char* filename);
+void loadQueueFromFile(Queue* q, const char* filename);
 
 #endif
