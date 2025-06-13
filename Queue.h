@@ -4,7 +4,7 @@
 #define QUEUE_H
 #define MAX_PELANGGAN_KASIR 10 // kalo mau ada batas maks pelanggan di kasir
 #include "boolean.h"
-#include "linked.h"
+//#include "linked.h"
 #include "pelanggan.h"
 
 typedef Pelanggan infotype;
@@ -15,8 +15,8 @@ typedef struct QueueNode {
 } QueueNode;
 
 typedef struct Queue {
-    address front;
-    address rear;
+    QueueNode* front;
+    QueueNode* rear;
     int count;
 } Queue;
 
@@ -26,8 +26,8 @@ bool isQueueEmpty(Queue q);
 // boolean is_Full (Queue Q);
 QueueNode* newNode(infotype data);
 void enqueue(Queue* q, infotype data);
-void dequeue(Queue* q, infotype* dataOut);
-void PrintQueue(Queue q);
+bool dequeue(Queue* q, infotype* dataOut);
+void printQueue(Queue q);
 void freeQueue(Queue* q);
 int countQueue(Queue q);
 

@@ -9,6 +9,7 @@
 
 typedef struct Pelanggan {
     char nama[50];
+    char waktuDatang[50];
     Keranjang* KPelanggan;
 } Pelanggan;
 

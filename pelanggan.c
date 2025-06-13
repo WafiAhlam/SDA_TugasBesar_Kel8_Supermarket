@@ -53,13 +53,14 @@ void saveCustomerReceipt(Pelanggan p) {
     fprintf(file, "Waktu: %s\n", p.waktuDatang);
     fprintf(file, "Daftar Barang:\n");
 
-    BarangNode* curr = p.KPelanggan->top;
+    NodeKeranjang* curr = p.KPelanggan->top;
     double total = 0;
     while (curr != NULL) {
-    fprintf(file, "- %s: %d\n", curr->barang.nama, curr->barang.harga);
-    total += curr->barang.harga;
-    curr = curr->next;
+        fprintf(file, "- %s: %.2f\n", curr->barang->namabarang, curr->barang->harga);
+        total += curr->barang->harga;
+        curr = curr->next;
     }
+
     fprintf(file, "TOTAL: %.2lf\n", total);
     fclose(file);
 }

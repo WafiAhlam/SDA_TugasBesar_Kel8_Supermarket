@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "queue.h"
 #include "pelanggan.h" 
 
@@ -32,6 +33,11 @@ void enqueue(Queue* q, infotype data) {
         printf("Antrian penuh. Maksimal %d pelanggan.\n", MAX_PELANGGAN_KASIR);
         return;
     }
+
+    // untuk waktu datang
+    time_t now = time(NULL);
+    struct tm* t = localtime(&now);
+    strftime(data.waktuDatang, sizeof(data.waktuDatang), "%Y-%m-%d %H:%M:%S", t);
 
     QueueNode* node = newNode(data);
     if (node == NULL) {

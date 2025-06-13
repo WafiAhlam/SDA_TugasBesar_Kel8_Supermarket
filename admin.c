@@ -145,7 +145,7 @@ void saveAdminReport(Queue* q, const char* filename) {
     }
 
     QueueNode* current = q->front;
-    int totalKeseluruhan = 0;
+    double totalKeseluruhan = 0;
 
     while (current != NULL) {
         double totalBelanja = getTotalHargaKeranjang(current->data.KPelanggan);
@@ -154,6 +154,6 @@ void saveAdminReport(Queue* q, const char* filename) {
         current = current->next;
     }
 
-    fprintf(file, "TOTAL SEMUA PELANGGAN: %d\n", totalKeseluruhan);
+    fprintf(file, "TOTAL SEMUA PELANGGAN: %.2lf\n", totalKeseluruhan);
     fclose(file);
 }
