@@ -13,6 +13,9 @@ int main() {
     // 1. Inisialisasi semua struktur data utama di sini
     RakBTree* databaseProdukAVL = NULL; // Database utama produk
     TreeNode* layoutSupermarket = buatLayoutSupermarket(); // Peta fisik
+    char tumpukan[100] = "cihuy";
+    RakTumpukan* rakTumpukan = createRakTumpukan(tumpukan);
+    
 
     // Anda bisa mengisi beberapa data awal di sini jika perlu
     // Contoh: databaseProdukAVL = insertProduk(databaseProdukAVL, produk1);
@@ -47,7 +50,7 @@ int main() {
                 break;
             case 2:
                 // Sama, panggil fungsi yang mengurus seluruh mode pelanggan
-                // menuPelanggan(layoutSupermarket, databaseProdukAVL);
+                 menuPelanggan(layoutSupermarket, &databaseProdukAVL, rakTumpukan);
                 printf("\nMode pelanggan belum terhubung. Silakan implementasikan.\n");
                 printf("Tekan Enter untuk kembali...");
                 getchar();

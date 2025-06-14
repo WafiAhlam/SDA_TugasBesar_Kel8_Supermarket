@@ -6,6 +6,7 @@
  */
 #include "avl.h"
 #include "TreeRak.h"
+#include "tumpukan.h"
 
 /**
  * REVISI: Hapus semua deklarasi 'menuAdmin' yang lama.
@@ -24,7 +25,7 @@ void menuHapusProduk(RakBTree** rootAVL, TreeNode* rootLayout);
 void menuLihatProduk(RakBTree* rootAVL);
 void menuTambahStokKeRak(RakBTree* rootAVL, TreeNode* rootLayout);
 void menuLihatPeta(TreeNode* rootLayout);
-
+void menuPushProdukKeTumpukan(RakBTree* rootAVL, RakTumpukan* rakTumpukan);
 // Anda mungkin masih memerlukan ini untuk login/registrasi di luar menu utama
 void registerAdmin();
 int loginAdmin();

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "admin.h"
+#include "tumpukan.h"
 
 // Struct untuk data admin, bisa tetap di sini atau dipindah ke admin.h jika perlu
 typedef struct {
@@ -155,6 +156,7 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
 // Menu ini baru muncul setelah admin berhasil login
 void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
     int pilihan;
+    RakTumpukan rakTumpukan;
     do {
         clearScreen();
         printf("==========================================\n");
@@ -165,6 +167,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
         printf("3. Lihat Semua Produk (Database AVL)\n");
         printf("4. Tambah Stok Produk ke Rak Fisik\n");
         printf("5. Lihat Peta Layout Supermarket\n");
+        printf("6. Isi Rak Promosi (PUSH ke Stack)\n");
         printf("0. Logout\n");
         printf("==========================================\n");
         printf("Pilihan Anda: ");
@@ -190,6 +193,9 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
             case 5:
                 menuLihatPeta(rootLayout);
                 break;
+            case 6:
+                menuPushProdukKeTumpukan(*rootAVL, &rakTumpukan); // <-- PANGGIL FUNGSI BARU
+                break;
             case 0:
                 printf("\nLogout dari sesi admin...\n");
                 pressEnterToContinue();
@@ -201,6 +207,26 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
     } while (pilihan != 0);
 }
 
+void menuPushProdukKeTumpukan(RakBTree* rootAVL, RakTumpukan* rakTumpukan) {
+    clearScreen();
+    char idProduk[20];
+    
+    printf("--- Isi Rak Promosi (Stack) ---\n");
+    displayRakTumpukan(rakTumpukan); // Tampilkan isi rak saat ini
+    
+    printf("Masukkan ID Produk yang akan diletakkan di rak promosi: ");
+    scanf("%19s", idProduk);
+    
+    RakBTree* nodeProduk = searchProduk(rootAVL, idProduk);
+    if (nodeProduk == NULL) {
+        printf("\nError: Produk dengan ID '%s' tidak ada di database.\n", idProduk);
+    } else {
+        // PUSH produk ke rak tumpukan
+        pushToRak(rakTumpukan, nodeProduk->info);
+        printf("Produk '%s' berhasil diletakkan di paling atas rak promosi.\n", nodeProduk->info.nama);
+    }
+    pressEnterToContinue();
+}
 
 // --- FUNGSI UNTUK SETIAP OPSI MENU ADMIN (setelah login) ---
 // (Fungsi-fungsi ini saya pindahkan dari jawaban sebelumnya)

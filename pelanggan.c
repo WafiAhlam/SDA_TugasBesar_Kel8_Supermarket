@@ -1,66 +1,134 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "pelanggan.h"
+#include "Keranjang.h"
+#include "tumpukan.h"
 
-void pelangganMenu() {
+// Deklarasi fungsi helper dari file lain
+void clearScreen();
+void pressEnterToContinue();
+
+// Implementasi fungsi utama menu pelanggan
+void menuPelanggan(TreeNode* rootSupermarket, RakBTree** rootAVL, RakTumpukan* rakTumpukan) {
+    Pelanggan pelanggan;
+    printf("\nMasukkan nama Anda: ");
+    scanf("%49s", pelanggan.nama);
+    while(getchar() != '\n');
+
+    // Setiap pelanggan baru mendapatkan keranjang baru
+    pelanggan.keranjang = createKeranjang();
+    
     int pilihan;
     do {
-        printf("\n=== MENU PELANGGAN ===\n");
-        printf("1. Lihat Produk\n");
-        printf("2. Tambah ke Keranjang\n");
-        printf("3. Lihat Keranjang\n");
-        printf("4. Checkout\n");
-        printf("0. Keluar\n");
+        clearScreen();
+        printf("=========================================\n");
+        printf("            MENU PELANGGAN\n");
+        printf("    Selamat datang, %s!\n", pelanggan.nama);
+        printf("=========================================\n");
+        printf("1. Lihat Peta & Isi Rak Supermarket\n");
+        printf("2. Ambil Barang dari Rak Promosi (POP from Stack)\n");
+        printf("3. Lihat Keranjang Belanja (Riwayat Pengambilan)\n");
+        printf("0. Selesai Belanja (Checkout)\n");
+        printf("=========================================\n");
         printf("Pilihan Anda: ");
-        scanf("%d", &pilihan);
 
-        switch(pilihan) {
+        if (scanf("%d", &pilihan) != 1) {
+            pilihan = -1;
+        }
+        while(getchar() != '\n');
+
+        switch (pilihan) {
             case 1:
-                printf("-> Fitur lihat produk (belum diimplementasi).\n");
+                clearScreen();
+                // Menampilkan peta dan rak tumpukan
+                tampilkanPetaSupermarket(rootSupermarket);
+                displayRakTumpukan(rakTumpukan);
+                pressEnterToContinue();
                 break;
             case 2:
-                printf("-> Tambah ke keranjang (belum diimplementasi).\n");
+                { // Blok baru untuk deklarasi variabel lokal
+                    clearScreen();
+                    printf("--- Mengambil Barang dari Rak Promosi ---\n");
+                    displayRakTumpukan(rakTumpukan);
+
+                    Produk produkDikeluarkan;
+                    // Lakukan POP dari rak
+                    if (popFromRak(rakTumpukan, &produkDikeluarkan)) {
+                        printf("-> Anda mengambil: '%s'.\n", produkDikeluarkan.nama);
+                        // Tambahkan produk yang di-POP ke keranjang belanja
+                        tambahProdukKeKeranjang(pelanggan.keranjang, produkDikeluarkan, 1);
+                    }
+                    pressEnterToContinue();
+                }
                 break;
             case 3:
-                printf("-> Lihat keranjang (belum diimplementasi).\n");
-                break;
-            case 4:
-                printf("-> Checkout (belum diimplementasi).\n");
+                clearScreen();
+                // Display keranjang berfungsi sebagai riwayat belanja
+                displayKeranjang(pelanggan.keranjang);
+                pressEnterToContinue();
                 break;
             case 0:
-                printf("-> Keluar.\n");
+                clearScreen();
+                printf("--- Proses Checkout ---\n");
+                displayKeranjang(pelanggan.keranjang);
+                if (!isKeranjangEmpty(pelanggan.keranjang)) {
+                    printf("\nTerima kasih telah berbelanja, %s!\n", pelanggan.nama);
+                    printf("Total belanja Anda adalah: %.0f\n", pelanggan.keranjang->totalHarga);
+                    saveCustomerReceipt(pelanggan); // Simpan struk
+                } else {
+                    printf("\nAnda tidak membeli apa-apa. Sampai jumpa lagi!\n");
+                }
+                // Hancurkan keranjang setelah selesai
+                destroyKeranjang(&pelanggan.keranjang);
+                pressEnterToContinue();
                 break;
             default:
-                printf("-> Pilihan tidak valid!\n");
+                printf("\nPilihan tidak valid!\n");
+                pressEnterToContinue();
         }
+
     } while (pilihan != 0);
 }
 
-void menuPelanggan(TreeNode* rootSupermarket) {
-    printf(">> Masuk ke Menu Pelanggan <<\n");
-    pelangganMenu(); // panggil menu pelanggan yang kamu buat
-}
-
+// Implementasi fungsi simpan struk yang sudah diperbaiki
 void saveCustomerReceipt(Pelanggan p) {
     char filename[100];
     sprintf(filename, "struk_%s.txt", p.nama);
     FILE* file = fopen(filename, "w");
     if (file == NULL) {
-        printf("Gagal membuat struk untuk %s\n", p.nama);
+        printf("Gagal membuat file struk untuk %s\n", p.nama);
         return;
     }
+    
+    time_t now = time(NULL);
+    char* dt = ctime(&now);
 
-    fprintf(file, "STRUK BELANJA - %s\n", p.nama);
-    fprintf(file, "Waktu: %s\n", p.waktuDatang);
-    fprintf(file, "Daftar Barang:\n");
+    fprintf(file, "=======================================\n");
+    fprintf(file, "         STRUK BELANJA - CHIKAFIKET\n");
+    fprintf(file, "=======================================\n");
+    fprintf(file, "Pelanggan : %s\n", p.nama);
+    fprintf(file, "Waktu     : %s", dt); // ctime sudah punya newline
+    fprintf(file, "---------------------------------------\n");
+    fprintf(file, "Barang yang Dibeli:\n");
 
-    NodeKeranjang* curr = p.KPelanggan->top;
-    double total = 0;
-    while (curr != NULL) {
-        fprintf(file, "- %s: %.2f\n", curr->barang->namabarang, curr->barang->harga);
-        total += curr->barang->harga;
-        curr = curr->next;
+    // Iterasi melalui KeranjangBelanja (linked list), bukan stack
+    KeranjangNode* current = p.keranjang->head;
+    while (current != NULL) {
+        fprintf(file, "- %-25s x%d (Rp %.0f)\n", 
+            current->infoProduk.nama, 
+            current->kuantitas, 
+            current->infoProduk.harga * current->kuantitas);
+        current = current->next;
     }
 
-    fprintf(file, "TOTAL: %.2lf\n", total);
+    fprintf(file, "---------------------------------------\n");
+    fprintf(file, "TOTAL BELANJA : Rp %.0f\n", p.keranjang->totalHarga);
+    fprintf(file, "=======================================\n");
+    fprintf(file, "      Terima Kasih Telah Berbelanja!   \n");
+    fprintf(file, "=======================================\n");
+    
     fclose(file);
+    printf("Struk belanja telah disimpan ke file: %s\n", filename);
 }

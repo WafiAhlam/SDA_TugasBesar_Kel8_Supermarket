@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "Keranjang.h" 
 #include "TreeRak.h"
+#include "tumpukan.h"
 
 typedef struct Pelanggan {
     char nama[50];
@@ -14,7 +15,7 @@ typedef struct Pelanggan {
 } Pelanggan;
 
 // ... (sisa deklarasi fungsi)
-void menuPelanggan(TreeNode* rootSupermarket, RakBTree* rootAVL); // Perlu akses ke AVL juga
+void menuPelanggan(TreeNode* rootSupermarket, RakBTree** rootAVL, RakTumpukan* rakTumpukan); // Perlu akses ke AVL juga
 void saveCustomerReceipt(Pelanggan p);
 
 #endif
