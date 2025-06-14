@@ -156,7 +156,6 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* ra
 // Menu ini baru muncul setelah admin berhasil login
 void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan) {
     int pilihan;
-    RakTumpukan rakTumpukan;
     do {
         clearScreen();
         printf("==========================================\n");
@@ -167,7 +166,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakT
         printf("3. Lihat Semua Produk (Database AVL)\n");
         printf("4. Tambah Stok Produk ke Rak Fisik\n");
         printf("5. Lihat Peta Layout Supermarket\n");
-        printf("6. Isi Rak Promosi (PUSH ke Stack)\n");
+        printf("6. Isi Rak Promosi (PUSH ke Stack)\n"); 
         printf("0. Logout\n");
         printf("==========================================\n");
         printf("Pilihan Anda: ");

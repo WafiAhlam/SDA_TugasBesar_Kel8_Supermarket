@@ -34,7 +34,7 @@ RakBTree *insertProduk(RakBTree *node, Produk produk);
 RakBTree *searchProduk(RakBTree *root, const char* idProdukCari);
 RakBTree* deleteProduk(RakBTree* root, const char* idProdukHapus);
 RakBTree* minValueNode(RakBTree* node);
-void inOrderProduk(RakBTree *root);
+void inOrderProduk(RakBTree *root); //Pemanfaatan dari traversal
 void deleteTree(RakBTree **node);
 
 #endif 

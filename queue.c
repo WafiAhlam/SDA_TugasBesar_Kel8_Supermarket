@@ -4,7 +4,7 @@
 #include <time.h>
 #include "queue.h"
 #include "pelanggan.h" 
-
+ /*
 // Membuat queue kosong
 void createQueue(Queue* q) {
     q->front = NULL;
@@ -138,3 +138,5 @@ void loadQueueFromFile(Queue* q, const char* filename) {
 
     fclose(file);
 }
+
+*/

@@ -107,7 +107,6 @@ RakBTree* minValueNode(RakBTree* node) {
 }
 
 
-// --- FUNGSI deleteProduk YANG DIREVISI ---
 RakBTree* deleteProduk(RakBTree* root, const char* idProdukHapus) {
     // 1. Lakukan penghapusan BST standar
     if (root == NULL) return root;
@@ -197,3 +196,5 @@ void deleteTree(RakBTree **node) {
     free(*node);
     *node = NULL; // Set pointer asli ke NULL
 }
+
+// Bentukan dari node sejenis yang dapat di rotasi 

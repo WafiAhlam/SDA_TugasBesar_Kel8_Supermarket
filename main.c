@@ -69,7 +69,7 @@ int main() {
     printf("\nMembersihkan memori...\n");
     deleteTree(&databaseProdukAVL); // Hapus AVL Tree
     bebaskanLayoutSupermarket(layoutSupermarket); // Hapus Non-Binary Tree
-    printf("Program selesai. Sampai jumpa! 👋\n");
+    printf("Program selesai. Sampai jumpa! :) \n");
 
     return 0;
 }
