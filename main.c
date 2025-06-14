@@ -46,7 +46,7 @@ int main() {
         switch (pilihan) {
             case 1:
                 // Panggil fungsi yang mengurus seluruh mode admin
-                jalankanModeAdmin(&databaseProdukAVL, layoutSupermarket);
+                jalankanModeAdmin(&databaseProdukAVL, layoutSupermarket, rakTumpukan);
                 break;
             case 2:
                 // Sama, panggil fungsi yang mengurus seluruh mode pelanggan

@@ -14,10 +14,10 @@
  */
 
 // Fungsi utama yang dipanggil dari main.c untuk memulai mode admin
-void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout);
+void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan);
 
 // Fungsi internal yang menangani menu setelah admin login
-void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout);
+void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan);
 
 // Deklarasi untuk setiap opsi di menu admin
 void menuTambahProduk(RakBTree** rootAVL);

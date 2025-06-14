@@ -115,7 +115,7 @@ int loginAdmin() {
 // --- FUNGSI MENU UTAMA ADMIN ---
 
 // Fungsi ini yang akan dipanggil dari main.c
-void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
+void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan) {
     int pilihan;
     do {
         clearScreen();
@@ -137,7 +137,7 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
             case 1:
                 if (loginAdmin()) {
                     // Jika login berhasil, masuk ke menu utama fungsionalitas admin
-                    prosesMenuAdmin(rootAVL, rootLayout);
+                    prosesMenuAdmin(rootAVL, rootLayout, rakTumpukan);
                 }
                 break;
             case 2:
@@ -154,7 +154,7 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
 }
 
 // Menu ini baru muncul setelah admin berhasil login
-void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
+void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan) {
     int pilihan;
     RakTumpukan rakTumpukan;
     do {
@@ -194,7 +194,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
                 menuLihatPeta(rootLayout);
                 break;
             case 6:
-                menuPushProdukKeTumpukan(*rootAVL, &rakTumpukan); // <-- PANGGIL FUNGSI BARU
+                menuPushProdukKeTumpukan(*rootAVL, rakTumpukan); // <-- PANGGIL FUNGSI BARU
                 break;
             case 0:
                 printf("\nLogout dari sesi admin...\n");
