@@ -3,14 +3,14 @@
 
 #include "avl.h" // Diperlukan untuk definisi 'Produk'
 #include "boolean.h" // Diperlukan untuk tipe data boolean
-
+#include "tipedata.h"
 /**
  * File: rak_tumpukan.h
  * Deskripsi: Header untuk ADT Stack (tumpukan) yang merepresentasikan rak LIFO.
  * - Admin melakukan PUSH.
  * - Pelanggan melakukan POP.
  */
-
+/*
 // Node untuk tumpukan
 typedef struct NodeTumpukan {
     Produk info;
@@ -23,7 +23,7 @@ typedef struct {
     int count;
     char namaRak[50];
 } RakTumpukan;
-
+*/
 
 // --- PROTOTYPE FUNGSI STACK ---
 

@@ -1,17 +1,17 @@
 #ifndef TREERAK_H
 #define TREERAK_H
-
+#include "tipedata.h"
 #include "items.h" // items.h sekarang seharusnya meng-include avl.h untuk definisi Produk
 #include "NonBinaryTree.h" // Untuk definisi TreeNode, TCreateNode, TaddChild, dll.
 // #define MAXPATH 100 // Lebih baik didefinisikan di .c file atau di header utilitas umum jika diperlukan
 
 // Struktur untuk menyimpan data per Rak (node di Non-Binary Tree Layout)
-typedef struct {
+/*typedef struct {
     char* namaLokasi;       // Nama lokasi rak (misal: "Rak Makanan", "Rak Buah")
     int jarakDariParent;    // Jarak dari rak induknya
     Listitem daftarItem;    // Linked List dari Produk yang ada di rak ini beserta stoknya
 } RakData;
-
+*/
 // --- DEKLARASI FUNGSI-FITUR LAYOUT SUPERMARKET (NON-BINARY TREE) ---
 
 // Fungsi untuk membuat layout/pohon supermarket utama
@@ -55,5 +55,7 @@ TreeNode* cariRakDenganIdBarang(TreeNode* root, const char* idProduk);
 
 // Fungsi rekursif untuk mengatur pointer parent pada setiap node tree
 void setParentPointersRecursive(TreeNode* node);
+void bebaskanLayoutSupermarket(TreeNode* root);
+
 
 #endif 
