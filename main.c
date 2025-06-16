@@ -1,27 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+// Include semua ADT dan Modul Menu
 #include "TreeRak.h"
 #include "avl.h"
-#include "admin.h"      
-#include "pelanggan.h"
 #include "tumpukan.h"
+#include "kasir.h"      // -- PENAMBAHAN 1: Include header untuk Antrian Kasir --
+#include "admin.h"
+#include "pelanggan.h"
 
-// Deklarasi fungsi helper dari admin.c
+// Deklarasi fungsi helper dari admin.c (jika ada)
 void clearScreen();
+void pressEnterToContinue(); // Tambahkan deklarasi ini jika belum ada di header
 
 int main() {
     // 1. Inisialisasi semua struktur data utama di sini
-    RakBTree* databaseProdukAVL = NULL; // Database utama produk
-    TreeNode* layoutSupermarket = buatLayoutSupermarket(); // Peta fisik
-    char tumpukan[100] = "cihuy";
-    RakTumpukan* rakTumpukan = createRakTumpukan(tumpukan);
+    RakBTree* databaseProdukAVL = NULL;                     // Database utama produk (AVL)
+    TreeNode* layoutSupermarket = buatLayoutSupermarket();    // Peta rak fisik (Non-Binary Tree)
+    RakTumpukan* rakTumpukan = createRakTumpukan("Rak Promosi Utama"); // Rak tumpukan (Stack)
     
+    // -- PENAMBAHAN 2: Inisialisasi Antrian Kasir (Queue) --
+    AntrianKasir* antrianKasir = createAntrian();
 
-    // Anda bisa mengisi beberapa data awal di sini jika perlu
-    // Contoh: databaseProdukAVL = insertProduk(databaseProdukAVL, produk1);
-    //         tambahItemKeRak(rakTujuan, produk1, 10);
-
-    if (layoutSupermarket == NULL) {
+    if (layoutSupermarket == NULL || rakTumpukan == NULL || antrianKasir == NULL) {
         printf("Gagal memuat peta supermarket. Program berhenti.\n");
         return 1;
     }
@@ -45,31 +46,33 @@ int main() {
 
         switch (pilihan) {
             case 1:
-                // Panggil fungsi yang mengurus seluruh mode admin
-                jalankanModeAdmin(&databaseProdukAVL, layoutSupermarket);
+                // -- PENAMBAHAN 3: Mengoper AntrianKasir ke fungsi menu admin --
+                jalankanModeAdmin(&databaseProdukAVL, layoutSupermarket, rakTumpukan, antrianKasir);
                 break;
             case 2:
-                // Sama, panggil fungsi yang mengurus seluruh mode pelanggan
-                 menuPelanggan(layoutSupermarket, &databaseProdukAVL, rakTumpukan);
-                printf("\nMode pelanggan belum terhubung. Silakan implementasikan.\n");
-                printf("Tekan Enter untuk kembali...");
-                getchar();
+                // -- PENAMBAHAN 3: Mengoper AntrianKasir ke fungsi menu pelanggan --
+                // -- PERBAIKAN PENTING: Pelanggan hanya perlu membaca AVL, jadi kirim pointer biasa --
+                menuPelanggan(layoutSupermarket, databaseProdukAVL, rakTumpukan, antrianKasir);
                 break;
             case 0:
                 printf("\nKeluar dari program...\n");
                 break;
             default:
                 printf("\nPilihan tidak valid. Coba lagi.\n");
-                printf("Tekan Enter untuk kembali...");
-                getchar();
+                pressEnterToContinue();
         }
     } while (pilihan != 0);
 
     // 2. Bersihkan semua memori sebelum program berakhir
     printf("\nMembersihkan memori...\n");
-    deleteTree(&databaseProdukAVL); // Hapus AVL Tree
+    deleteTree(&databaseProdukAVL);             // Hapus AVL Tree
     bebaskanLayoutSupermarket(layoutSupermarket); // Hapus Non-Binary Tree
-    printf("Program selesai. Sampai jumpa! 👋\n");
+
+    // -- PENAMBAHAN 4: Membersihkan memori Antrian dan Rak Tumpukan --
+    destroyRakTumpukan(&rakTumpukan);
+    destroyAntrian(&antrianKasir);
+
+    printf("Program selesai. Sampai jumpa! :) \n");
 
     return 0;
 }

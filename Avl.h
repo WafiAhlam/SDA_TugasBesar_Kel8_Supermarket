@@ -5,8 +5,10 @@
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "tipedata.h"
 
 // Struktur untuk menyimpan informasi produk (DEFINISI PRODUK ADA DI SINI)
+/*
 typedef struct {
     char idProduk[20]; // Misalnya, barcode atau SKU
     char nama[100];
@@ -21,6 +23,7 @@ typedef struct RakBTree {
     struct RakBTree *right;
     int height;
 } RakBTree;
+*/
 
 // --- Deklarasi Fungsi AVL Tree ---
 int height(RakBTree *N);
@@ -34,7 +37,7 @@ RakBTree *insertProduk(RakBTree *node, Produk produk);
 RakBTree *searchProduk(RakBTree *root, const char* idProdukCari);
 RakBTree* deleteProduk(RakBTree* root, const char* idProdukHapus);
 RakBTree* minValueNode(RakBTree* node);
-void inOrderProduk(RakBTree *root);
+void inOrderProduk(RakBTree *root); //Pemanfaatan dari traversal
 void deleteTree(RakBTree **node);
 
 #endif 

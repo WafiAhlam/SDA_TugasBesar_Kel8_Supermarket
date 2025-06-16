@@ -37,7 +37,7 @@ void InsertLastItem(Listitem *L, Produk produk, int stock) { // Menerima Produk
 }
 
 // Fungsi untuk mencari item berdasarkan ID produk
-AddressItemNode SearchItem(Listitem L, char* idProdukCari) { // Menerima idProduk (string)
+AddressItemNode SearchItem(Listitem L, const char* idProdukCari) { // Menerima idProduk (string)
     AddressItemNode P = L.head;
     while (P != Nil) {
         if (strcmp(P->dataProduk.idProduk, idProdukCari) == 0) { // Bandingkan idProduk
@@ -82,4 +82,24 @@ void PrintListItem(Listitem L) {
 void displayItem(const Produk* produk) { // Menerima pointer ke Produk
     printf("ID: %s, Nama: %s, Harga: %.2f",
            produk->idProduk, produk->nama, produk->harga);
+}
+
+boolean kurangiStokItem(Listitem* L, const char* idProduk, int jumlah) {
+    if (L == NULL) return FALSE;
+
+    AddressItemNode itemNode = SearchItem(*L, idProduk);
+    if (itemNode == NULL) {
+        printf("Error: Produk dengan ID '%s' tidak ditemukan di rak ini.\n", idProduk);
+        return FALSE;
+    }
+
+    if (itemNode->stock < jumlah) {
+        printf("Error: Stok '%s' di rak tidak mencukupi. Tersedia: %d, Diminta: %d.\n",
+               itemNode->dataProduk.nama, itemNode->stock, jumlah);
+        return FALSE;
+    }
+
+    // Kurangi stok jika semua kondisi terpenuhi
+    itemNode->stock -= jumlah;
+    return TRUE;
 }

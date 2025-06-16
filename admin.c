@@ -115,7 +115,7 @@ int loginAdmin() {
 // --- FUNGSI MENU UTAMA ADMIN ---
 
 // Fungsi ini yang akan dipanggil dari main.c
-void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
+void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan, AntrianKasir* antrianKasir) {
     int pilihan;
     do {
         clearScreen();
@@ -137,7 +137,7 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
             case 1:
                 if (loginAdmin()) {
                     // Jika login berhasil, masuk ke menu utama fungsionalitas admin
-                    prosesMenuAdmin(rootAVL, rootLayout);
+                    prosesMenuAdmin(rootAVL, rootLayout, rakTumpukan);
                 }
                 break;
             case 2:
@@ -154,9 +154,8 @@ void jalankanModeAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
 }
 
 // Menu ini baru muncul setelah admin berhasil login
-void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
+void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout, RakTumpukan* rakTumpukan) {
     int pilihan;
-    RakTumpukan rakTumpukan;
     do {
         clearScreen();
         printf("==========================================\n");
@@ -167,7 +166,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
         printf("3. Lihat Semua Produk (Database AVL)\n");
         printf("4. Tambah Stok Produk ke Rak Fisik\n");
         printf("5. Lihat Peta Layout Supermarket\n");
-        printf("6. Isi Rak Promosi (PUSH ke Stack)\n");
+        printf("6. Isi Rak Promosi (PUSH ke Stack)\n"); 
         printf("0. Logout\n");
         printf("==========================================\n");
         printf("Pilihan Anda: ");
@@ -194,7 +193,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
                 menuLihatPeta(rootLayout);
                 break;
             case 6:
-                menuPushProdukKeTumpukan(*rootAVL, &rakTumpukan); // <-- PANGGIL FUNGSI BARU
+                menuPushProdukKeTumpukan(*rootAVL, rakTumpukan); // <-- PANGGIL FUNGSI BARU
                 break;
             case 0:
                 printf("\nLogout dari sesi admin...\n");
@@ -207,7 +206,7 @@ void prosesMenuAdmin(RakBTree** rootAVL, TreeNode* rootLayout) {
     } while (pilihan != 0);
 }
 
-void menuPushProdukKeTumpukan(RakBTree* rootAVL, RakTumpukan* rakTumpukan) {
+void menuPushProdukKeTumpukan(RakBTree* rootAVL, RakTumpukan* rakTumpukan) { 
     clearScreen();
     char idProduk[20];
     
@@ -277,7 +276,7 @@ void menuLihatProduk(RakBTree* rootAVL) {
     pressEnterToContinue();
 }
 
-void menuTambahStokKeRak(RakBTree* rootAVL, TreeNode* rootLayout) {
+void menuTambahStokKeRak(RakBTree* rootAVL, TreeNode* rootLayout) { 
     clearScreen();
     char idProduk[20], namaRak[100];
     int jumlahStok;
@@ -308,4 +307,26 @@ void menuLihatPeta(TreeNode* rootLayout) {
     clearScreen();
     tampilkanPetaSupermarket(rootLayout);
     pressEnterToContinue();
+}
+
+    void menuLayaniPelanggan(AntrianKasir* antrian) {
+    clearScreen();
+    Pelanggan pelangganDilayani;
+
+    if (dequeuePelanggan(antrian, &pelangganDilayani)) {
+        printf("Melayani pelanggan: %s\n", pelangganDilayani.nama);
+        
+        // Proses keranjang belanjanya
+        displayKeranjang(pelangganDilayani.keranjang);
+        printf("\nTotal yang harus dibayar: %.0f\n", pelangganDilayani.keranjang->totalHarga);
+        printf("--- PEMBAYARAN DIPROSES ---\n");
+        printf("Pembayaran berhasil. Terima kasih!\n");
+
+        // Setelah selesai, keranjang pelanggan dihancurkan
+        destroyKeranjang(&(pelangganDilayani.keranjang));
+    }
+    // Jika antrian kosong, pesan error sudah dicetak di dalam dequeuePelanggan
+
+    pressEnterToContinue();
+
 }
