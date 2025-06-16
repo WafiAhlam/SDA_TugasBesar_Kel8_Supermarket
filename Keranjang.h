@@ -27,6 +27,56 @@ typedef struct  KeranjangBelanja {
 
 // --- PROTOTYPE FUNGSI KERANJANG BELANJA ---
 
+
+/*
+IS: Memori heap tersedia untuk dialokasikan.
+FS: Sebuah objek KeranjangBelanja baru telah dibuat di memori dengan head menunjuk ke NULL, jumlahItemUnik=0, dan totalHarga=0.0. Pointer ke objek baru ini dikembalikan.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+KeranjangBelanja* createKeranjang();
+
+/*
+IS: keranjang terdefinisi, bisa kosong atau berisi item.
+FS: Mengembalikan nilai TRUE jika head dari keranjang adalah NULL, dan FALSE jika tidak. State dari keranjang tidak berubah.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+boolean isKeranjangEmpty(KeranjangBelanja* keranjang);
+
+/*
+IS: keranjang dan produk terdefinisi. kuantitas adalah integer positif.
+FS: Jika produk sudah ada di keranjang, kuantitasnya bertambah. Jika belum ada, sebuah node baru yang berisi produk tersebut ditambahkan ke dalam keranjang. totalHarga keranjang telah diperbarui.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+void tambahProdukKeKeranjang(KeranjangBelanja* keranjang, Produk produk, int kuantitas);
+
+/*
+IS: keranjang terdefinisi. idProduk adalah ID yang akan dikurangi. kuantitas adalah integer positif.
+FS: Jika produk ditemukan, kuantitasnya di keranjang berkurang. Jika kuantitas menjadi 0 atau kurang, node produk tersebut dihapus sepenuhnya dari keranjang. totalHarga keranjang telah diperbarui.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+void kurangiProdukDariKeranjang(KeranjangBelanja* keranjang, const char* idProduk, int kuantitas);
+
+/*
+IS: keranjang terdefinisi.
+FS: Seluruh isi dari keranjang (nama produk, kuantitas, harga, subtotal, dan total) telah tercetak ke layar dengan format yang rapi. State dari keranjang tidak berubah.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+void displayKeranjang(KeranjangBelanja* keranjang);
+
+/*
+IS: keranjang adalah pointer-ke-pointer dari sebuah objek KeranjangBelanja yang valid.
+FS: Semua node di dalam keranjang dan objek KeranjangBelanja itu sendiri telah dibebaskan dari memori (free). Pointer asli yang ditunjuk oleh 'keranjang' sekarang bernilai NULL.
+
+Creator: Wafi Ahlam Rizqulloh
+*/
+void destroyKeranjang(KeranjangBelanja** keranjang);
+
+/*
 // Membuat dan mengembalikan pointer ke keranjang belanja baru yang kosong.
 KeranjangBelanja* createKeranjang();
 
@@ -43,5 +93,5 @@ void kurangiProdukDariKeranjang(KeranjangBelanja* keranjang, const char* idProdu
 void displayKeranjang(KeranjangBelanja* keranjang);
 // Menghancurkan keranjang dan membebaskan semua memori yang digunakan.
 void destroyKeranjang(KeranjangBelanja** keranjang);
-
+*/
 #endif // KERANJANG_BELANJA_H
