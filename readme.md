@@ -1,5 +1,5 @@
 RUN PROGRAM 
-gcc main.c admin.c Avl.c items.c linked.c stack.c NonBinaryTree.c TreeRak.c tumpukan.c Keranjang.c pelanggan.c -o main
+gcc main.c admin.c Avl.c items.c  NonBinaryTree.c TreeRak.c tumpukan.c Keranjang.c pelanggan.c -o main
 
 
 Cara menggunakan sistem CHIKAFIKET 
